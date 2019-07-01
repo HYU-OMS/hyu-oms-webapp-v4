@@ -1,12 +1,41 @@
 {
   "name": "hyu-oms-v4",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "HYU-OMS Version 4 (API Server + Web Application)",
+  "homepage": "https://hyu-oms.com",
   "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "watch-server": "nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": {
+    "name": "Kihoon Han",
+    "email": "khhan1993@gmail.com",
+    "url": "https://github.com/khhan1993"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HYU-OMS/hyu-oms-v4.git"
+  },
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "ws": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-json": "^2.0.18",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.0.42",
+    "@types/ws": "^6.0.1",
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2"
+  },
+  "private": true
 }
