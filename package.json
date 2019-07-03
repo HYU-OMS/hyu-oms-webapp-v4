@@ -4,7 +4,7 @@
   "description": "HYU-OMS Version 4 (API Server + Web Application)",
   "homepage": "https://hyu-oms.com",
   "scripts": {
-    "start": "ts-node ./src/index.ts"
+    "start": "concurrently --kill-others-on-fail \"ts-node ./src/index.ts\" \" cd ./src/react-app && if test \"$NODE_ENV\" = \"production\" ; then npm run build ; else npm start ; fi \""
   },
   "keywords": [],
   "author": {
@@ -33,6 +33,7 @@
     "@types/koa-router": "^7.0.42",
     "@types/koa-static": "^4.0.1",
     "@types/ws": "^6.0.1",
+    "concurrently": "^4.1.1",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2"
   },
