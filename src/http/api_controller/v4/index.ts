@@ -21,7 +21,7 @@ app.use(async (req: CustomRequest, res: CustomResponse, next: any) => {
     if (Boolean(req.get('Authorization')) === true) {
       const authorization: Array<string> = req.get('Authorization').split(' ');
       if (authorization[0] !== 'Bearer' || authorization.length !== 2) {
-        throw createError(400, "'Authorization' must be 'Bearer [token]'.", {
+        throw createError(400, '\'Authorization\' must be \'Bearer [token]\'.', {
           state: 'AUTH_HEADER_FORMAT_ERR',
           info: ['Authorization']
         });
@@ -41,10 +41,10 @@ app.use(async (req: CustomRequest, res: CustomResponse, next: any) => {
 // TODO: 여기에 각 route 에 해당하는 controller 를 연결하게 된다.
 
 /* 서버 Alive 체크를 위한 것 */
-app.get("/", async (req: CustomRequest, res: CustomResponse) => {
+app.get('/', async (req: CustomRequest, res: CustomResponse) => {
   res.status(200);
   res.json({
-    "version": "4.0"
+    'version': '4.0'
   });
 });
 

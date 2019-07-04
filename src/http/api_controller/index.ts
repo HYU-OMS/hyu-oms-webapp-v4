@@ -6,25 +6,25 @@ import * as helmet from 'helmet';
 
 /* To use Typescript types */
 import { Application } from 'express';
-import { CustomRequest, CustomResponse } from "../../custom-types";
+import { CustomRequest, CustomResponse } from '../../custom-types';
 
 import api_v4 from './v4';
 
 const app: Application = asyncify(express());
 
 /* 기본 설정 */
-app.enable("trust proxy");
+app.enable('trust proxy');
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /* API Version 4 */
-app.use("/v4", api_v4);
+app.use('/v4', api_v4);
 
 /* catch 404 and forward to error handler */
 app.use(async (req: CustomRequest, res: CustomResponse, next: any) => {
-  next(createError(404, "Requested URI does not exists.", {
+  next(createError(404, 'Requested URI does not exists.', {
     state: 'URI_NOT_EXISTS'
   }));
 });
@@ -34,7 +34,7 @@ app.use(async (err: any, req: CustomRequest, res: CustomResponse) => {
   const status_code: number = err.status || 500;
 
   /* development 환경일 경우 콘솔에 error 표시 */
-  if(process.env.NODE_ENV !== "production") {
+  if(process.env.NODE_ENV !== 'production') {
     console.error(err.stack);
   }
 
