@@ -8,6 +8,7 @@ import * as path from 'path';
 
 /* To use Typescript types */
 import { Application, Request, Response } from 'express';
+import { Server } from 'http';
 
 import api_controller from './api_controller';
 
@@ -40,5 +41,5 @@ else {
 }
 
 /* HTTP 서버를 생성 후 export */
-const server: http.Server = http.createServer(app);
+const server: Server = http.createServer(app);
 export default server;
