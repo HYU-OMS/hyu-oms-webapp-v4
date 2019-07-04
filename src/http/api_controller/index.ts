@@ -5,7 +5,8 @@ import * as cors from 'cors';
 import * as helmet from 'helmet';
 
 /* To use Typescript types */
-import { Application, Request, Response } from 'express';
+import { Application } from 'express';
+import { CustomRequest, CustomResponse } from "../../custom-types";
 
 import api_v4 from './v4';
 
@@ -22,14 +23,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/v4", api_v4);
 
 /* catch 404 and forward to error handler */
-app.use(async (req: Request, res: Response, next: any) => {
+app.use(async (req: CustomRequest, res: CustomResponse, next: any) => {
   next(createError(404, "Requested URI does not exists.", {
     state: 'URI_NOT_EXISTS'
   }));
 });
 
 /* error handler */
-app.use(async (err: any, req: Request, res: Response, next: any) => {
+app.use(async (err: any, req: CustomRequest, res: CustomResponse) => {
   const status_code: number = err.status || 500;
 
   /* development 환경일 경우 콘솔에 error 표시 */

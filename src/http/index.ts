@@ -7,8 +7,9 @@ import * as http from 'http';
 import * as path from 'path';
 
 /* To use Typescript types */
-import { Application, Request, Response } from 'express';
+import { Application } from 'express';
 import { Server } from 'http';
+import { CustomRequest, CustomResponse } from "../custom-types";
 
 import api_controller from './api_controller';
 
@@ -35,7 +36,7 @@ if(process.env.NODE_ENV === "production") {
 }
 else {
   const proxy: httpProxy = httpProxy.createProxyServer({});
-  app.use(async (req: Request, res: Response) => {
+  app.use(async (req: CustomRequest, res: CustomResponse) => {
     proxy.web(req, res, { target: 'http://localhost:8899' });
   });
 }

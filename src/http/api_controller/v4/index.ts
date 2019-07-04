@@ -5,7 +5,8 @@ import * as helmet from 'helmet';
 import * as jwt from 'jsonwebtoken';
 
 /* To use Typescript types */
-import { Application, Request, Response } from 'express';
+import { Application } from 'express';
+import { CustomRequest, CustomResponse } from '../../../custom-types';
 
 const app: Application = asyncify(express());
 
@@ -13,7 +14,7 @@ const app: Application = asyncify(express());
 app.use(helmet());
 
 /* JWT 가 Authorization header 또는 URL query 'jwt' 에 존재하는지 확인 */
-app.use(async (req: Request, res: Response, next: any) => {
+app.use(async (req: CustomRequest, res: CustomResponse, next: any) => {
   if(Boolean(req.get('Authorization')) === true || Boolean(req.query['jwt']) === true) {
     let token: string = undefined;
 
@@ -40,7 +41,7 @@ app.use(async (req: Request, res: Response, next: any) => {
 // TODO: 여기에 각 route 에 해당하는 controller 를 연결하게 된다.
 
 /* 서버 Alive 체크를 위한 것 */
-app.get("/", async (req: Request, res: Response, next: any) => {
+app.get("/", async (req: CustomRequest, res: CustomResponse) => {
   res.status(200);
   res.json({
     "version": "4.0"
