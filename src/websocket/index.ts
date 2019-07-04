@@ -1,7 +1,10 @@
 import * as WebSocket from 'ws';
 import server from '../http'; // http/index.ts 에서 생성한 HTTP 서버를 import
 
-const wss: WebSocket.Server = new WebSocket.Server({ server });
+/* To use Typescript types */
+import { Server } from 'ws';
+
+const wss: Server = new WebSocket.Server({ server });
 
 // TODO: 나머지 코드를 작성
 
