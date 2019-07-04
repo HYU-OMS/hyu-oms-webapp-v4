@@ -1,9 +1,10 @@
 import * as express from 'express';
+import * as asyncify from 'express-asyncify';
 import * as httpProxy from 'http-proxy';
 import * as http from 'http';
 import * as path from 'path';
 
-const app = express();
+const app: express.Application = asyncify(express());
 
 /* "/api" 로 들어오는 모든 요청은 아래 handler 가 처리하게 됨. */
 // TODO: 관련 코드 작성
