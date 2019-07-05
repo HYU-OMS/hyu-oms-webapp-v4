@@ -5,14 +5,18 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 
+import reducer from './reducer';
+
 import * as serviceWorker from './serviceWorker';
 
-//const store = createStore(reducer);
+import App from './component/App';
+
+const store = createStore(reducer);
 const max_snack = (window.innerWidth < 600) ? 1 : 5;
 const horizontal_position = (window.innerWidth < 600) ? 'center': 'left';
 
 ReactDOM.render(
-  //<Provider store={store}>
+  <Provider store={store}>
     <BrowserRouter>
       <SnackbarProvider
         anchorOrigin={{
@@ -22,12 +26,12 @@ ReactDOM.render(
         maxSnack={max_snack}
         dense={window.innerWidth < 600}
       >
-
+        <App />
       </SnackbarProvider>
     </BrowserRouter>
-  //</Provider>
-  ,
-  document.getElementById('root'));
+  </Provider>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

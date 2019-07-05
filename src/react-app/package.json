@@ -1,6 +1,6 @@
 {
   "name": "hyu-oms-v4-react-app",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "description": "HYU-OMS Version 4 (API Server + Web Application) - Nested project",
   "homepage": "https://hyu-oms.com",
   "private": true,
