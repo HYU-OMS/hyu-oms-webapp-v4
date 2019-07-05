@@ -50,3 +50,11 @@ export interface KakaoUserInfo {
     nickname: string
   }
 }
+
+/* React Redux 에서 사용되는 state 의 형태 */
+export interface ReduxAuthState {
+  jwt?: string;
+  group_id?: string;
+  role?: number;
+  api_url: string;
+}

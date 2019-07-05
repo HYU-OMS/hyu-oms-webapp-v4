@@ -5,14 +5,14 @@ import { ReduxAuthState } from '../../../custom-types';
 const initialState: ReduxAuthState = {
   'jwt': localStorage.getItem('jwt') || undefined,
   'group_id': localStorage.getItem('group_id') || undefined,
-  'role': (localStorage.getItem('role') !== null) ? parseInt(<string>localStorage.getItem('role'), 10) : undefined,
+  'role': (localStorage.getItem('role') !== null) ? parseInt(localStorage.getItem('role') as string, 10) : undefined,
   'api_url': ((): string => {
     if(process.env.NODE_ENV === 'development') {
       if(!Boolean(process.env.REACT_APP_API_URL)) {
         return 'http://localhost:3000';
       }
       else {
-        return <string>process.env.REACT_APP_API_URL;
+        return process.env.REACT_APP_API_URL as string;
       }
     }
     else {
@@ -20,7 +20,7 @@ const initialState: ReduxAuthState = {
         return 'https://hyu-oms.com/api/v4';
       }
       else {
-        return <string>process.env.REACT_APP_API_URL;
+        return process.env.REACT_APP_API_URL as string;
       }
     }
   })()
