@@ -4,7 +4,8 @@
   "description": "HYU-OMS Version 4 (API Server + Web Application)",
   "homepage": "https://hyu-oms.com",
   "scripts": {
-    "start": "concurrently --kill-others-on-fail \"ts-node ./src/index.ts\" \" cd ./src/react-app && if test \"$NODE_ENV\" = \"production\" ; then npm run build ; else BROWSER=none PORT=8899 npm start ; fi \""
+    "start": "concurrently --kill-others-on-fail \"ts-node ./src/index.ts\" \" cd ./src/react-app && if test \"$NODE_ENV\" = \"production\" ; then npm run build ; else BROWSER=none PORT=8899 npm start ; fi \"",
+    "start-only-api-server": "HYU_OMS_API_SERVER_ONLY=1 ts-node ./src/index.ts"
   },
   "keywords": [],
   "author": {
