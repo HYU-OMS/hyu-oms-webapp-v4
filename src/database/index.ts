@@ -4,6 +4,8 @@ import config from '../config';
 const db_cfg: any = config['v4']['mongodb'];
 const connect_url = `mongodb://${db_cfg['user']}:${db_cfg['pwd']}@${db_cfg['host']}:${db_cfg['port']}/admin`;
 
+mongoose.set('useCreateIndex', true);
+
 const connect_database: any = async () => {
   try {
     await mongoose.connect(connect_url, { dbName: db_cfg['db'], useNewUrlParser: true });
