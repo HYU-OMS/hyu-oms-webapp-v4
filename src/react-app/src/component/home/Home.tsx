@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 const styles: any = (theme: any) => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: 'auto'
   }
 });

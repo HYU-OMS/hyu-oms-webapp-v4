@@ -65,8 +65,8 @@ const styles: any = (theme: any) => ({
     },
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-    paddingBottom: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -76,16 +76,16 @@ const styles: any = (theme: any) => ({
     marginLeft: 0,
   },
   fbLoginButton: {
-    marginTop: theme.spacing.unit,
-      marginBottom: theme.spacing.unit / 2,
+    marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1 / 2),
       backgroundColor: '#3b5998',
       borderColor: '#3b5998',
       color: '#ffffff',
       textTransform: 'initial'
   },
   kakaoLoginButton: {
-    marginTop: theme.spacing.unit / 2,
-      marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing(1 / 2),
+      marginBottom: theme.spacing(1),
       borderColor: '#f9df33',
       backgroundColor: '#f9df33',
       textTransform: 'initial'
