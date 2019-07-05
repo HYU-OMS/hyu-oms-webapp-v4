@@ -81,6 +81,10 @@ const styles = (theme: any) => ({
     width: '48px',
     minWidth: '48px'
   },
+  link: {
+    textDecoration: 'none',
+    color: 'rgba(0, 0, 0, 0.87)'
+  },
   divider: {
     marginTop: '11.5px',
     marginBottom: '11.5px',
@@ -224,103 +228,123 @@ class App extends React.Component<any, any> {
         <div style={{padding: '6px'}} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/main'}>
-            <ListItemIcon className={classes.listItemIcon}><HomeIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>홈</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/main' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/main'}>
+              <ListItemIcon className={classes.listItemIcon}><HomeIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>홈</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/group'}>
-            <ListItemIcon className={classes.listItemIcon}><GroupIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>그룹</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/group' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/group'}>
+              <ListItemIcon className={classes.listItemIcon}><GroupIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>그룹</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/request'}>
-            <ListItemIcon className={classes.listItemIcon}><PlaylistAddIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>주문 입력</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/order/request' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/request'}>
+              <ListItemIcon className={classes.listItemIcon}><PlaylistAddIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>주문 입력</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/list'}>
-            <ListItemIcon className={classes.listItemIcon}><TocIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>전체 주문 내역</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/order/list' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/list'}>
+              <ListItemIcon className={classes.listItemIcon}><TocIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>전체 주문 내역</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/unverified'}>
-            <ListItemIcon className={classes.listItemIcon}><PlaylistAddCheckIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>처리되지 않은 주문 내역</Typography>
-            </ListItemText>
-          </ListItem>
-        </List>
-
-        <Divider className={classes.divider} />
-
-        <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/queue'}>
-            <ListItemIcon className={classes.listItemIcon}><FormatListNumberedIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>메뉴별 대기열</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/order/unverified' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/unverified'}>
+              <ListItemIcon className={classes.listItemIcon}><PlaylistAddCheckIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>처리되지 않은 주문 내역</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/statistics'}>
-            <ListItemIcon className={classes.listItemIcon}><DonutSmallIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>통계</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/queue' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/queue'}>
+              <ListItemIcon className={classes.listItemIcon}><FormatListNumberedIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>메뉴별 대기열</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/menu'}>
-            <ListItemIcon className={classes.listItemIcon}><SettingsIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>메뉴 관리</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/statistics' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/statistics'}>
+              <ListItemIcon className={classes.listItemIcon}><DonutSmallIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>통계</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
+        </List>
+
+        <Divider className={classes.divider} />
+
+        <List className={classes.list}>
+          <Link to='/manage/menu' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/menu'}>
+              <ListItemIcon className={classes.listItemIcon}><SettingsIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>메뉴 관리</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/setmenu'}>
-            <ListItemIcon className={classes.listItemIcon}><SettingsApplicationsIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>세트메뉴 관리</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/manage/setmenu' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/setmenu'}>
+              <ListItemIcon className={classes.listItemIcon}><SettingsApplicationsIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>세트메뉴 관리</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/group_and_member'}>
-            <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon /></ListItemIcon>
-            <ListItemText>
-              <Typography variant='button'>그룹, 멤버 관리</Typography>
-            </ListItemText>
-          </ListItem>
+          <Link to='/manage/group_and_member' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/group_and_member'}>
+              <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>그룹, 멤버 관리</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
         </List>
 
         <Divider className={classes.divider} />
