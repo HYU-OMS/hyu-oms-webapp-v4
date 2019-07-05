@@ -11,6 +11,9 @@ import { CustomRequest, CustomResponse } from '../../../custom-types';
 /* API v4 config file */
 import config from '../../../config';
 
+/* MongoDB models */
+import User from '../../../database/models/user';
+
 /* Controllers for each routes */
 import user_controller from './routes/user';
 
@@ -65,7 +68,24 @@ app.use(async (req: CustomRequest, res: CustomResponse, next: any) => {
       }
     }
 
-    req.jwt_info = decoded_token;
+    // TODO: 'auth_uuid' 값 검증 프로세스 추가
+
+    /* JWT 에 담긴 User 정보를 검증한다. (존재 여부 및 enabled 상태 확인) */
+    const user_info: any = await User.findById(decoded_token['id']);
+    if(user_info === null) {
+      throw createError(400, 'Request user in JWT not found.', {
+        state: 'JWT_USER_NOT_FOUND_ERR',
+        info: ['Authorization']
+      });
+    }
+    else if(user_info['enabled'] === false) {
+      throw createError(400, 'Request user in JWT is disabled.', {
+        state: 'JWT_USER_DISABLED_ERR',
+        info: ['Authorization']
+      });
+    }
+
+    req.user_info = user_info;
   }
 
   next();

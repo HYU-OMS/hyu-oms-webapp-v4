@@ -7,7 +7,14 @@ const config: any = {
   'v4': {
     'jwt': {
       'secret_key': (process.env.HYU_OMS_JWT_SECRET_KEY || 'uEbYw@y3Lh+hSa33'),
-      'algorithm': (process.env.HYU_OMS__JWT_ALGORITHM || 'HS512')
+      'algorithm': (process.env.HYU_OMS_JWT_ALGORITHM || 'HS512')
+    },
+    'mongodb': {
+      'host': (process.env.HYU_OMS_MONGODB_HOST || 'localhost'),
+      'port': (process.env.HYU_OMS_MONGODB_PORT || 27017),
+      'user': (process.env.HYU_OMS_MONGODB_PWD || 'khhan1993'),
+      'pwd': (process.env.HYU_OMS_MONGODB_PWD || 'USE_YOUR_PASSWORD_HERE'),
+      'db': (process.env.HYU_OMS_MONDODB_DB || 'hyu-oms')
     }
   }
 };

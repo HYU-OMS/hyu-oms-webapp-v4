@@ -16,6 +16,9 @@ import {
 
 import config from '../../../../config';
 
+/* MongoDB models */
+import User from '../../../../database/models/user';
+
 const jwt_config: any = config['v4']['jwt'];
 const router: Router = asyncify(express.Router());
 
@@ -27,7 +30,7 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
   if(auth_type === 'facebook') {
     const fb_access_token: string = content['access_token'];
     if(Boolean(fb_access_token) === false) {
-      throw createError(400, "'access_token' must be provided!", {
+      throw createError(400, '\'access_token\' must be provided!', {
         state: 'REQUIRED_VALUE_EMPTY_ERR',
         info: ['access_token']
       });
@@ -35,13 +38,13 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
 
     /* Facebook API Server 에 요청을 보내기 위한 옵션 */
     const options: RequestPromiseOption = {
-      "method": "GET",
-      "uri": "https://graph.facebook.com/v3.3/me",
-      "qs": {
-        "access_token": fb_access_token,
-        "fields": "id,name"
+      'method': 'GET',
+      'uri': 'https://graph.facebook.com/v3.3/me',
+      'qs': {
+        'access_token': fb_access_token,
+        'fields': 'id,name'
       },
-      "resolveWithFullResponse": true
+      'resolveWithFullResponse': true
     };
 
     let profile: FacebookUserInfo = undefined;
@@ -56,7 +59,7 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
       const resp_body: any = JSON.parse(resp['body']);
 
       const status_code: number = parseInt(resp['statusCode'], 10) || 500;
-      const message: string = resp_body['error']['message'] || "Facebook API Server Error!";
+      const message: string = resp_body['error']['message'] || 'Facebook API Server Error!';
 
       throw createError(status_code, message, {
         state: 'FACEBOOK_API_ERR'
@@ -71,25 +74,28 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
 
     const auth_uuid: string = uuidv4();
 
-    // TODO: DB 접근 관련 코드 작성
+    let user_info: any = await User.findOne({social_type: 'facebook', social_id: fb_id});
+    if(user_info === null) {
+      await User.create({name: fb_nick, social_type: 'facebook', social_id: fb_id});
+      user_info = await User.findOne({social_type: 'facebook', social_id: fb_id});
+    }
 
-    // TODO: DB 접근 코드 작성 후 주석 해제 예정
     const token: string = jwt.sign({
-      //"user_id": user_data['id'],
-      //"user_name": user_data['name'],
-      "auth_uuid": auth_uuid
+      'id': user_info['_id'],
+      'name': user_info['name'],
+      'auth_uuid': auth_uuid
     }, jwt_config['secret_key'], {
-      "algorithm": jwt_config['algorithm'],
-      "expiresIn": "24h"
+      'algorithm': jwt_config['algorithm'],
+      'expiresIn': '24h'
     });
 
     res.status(200);
-    res.json({"jwt": token});
+    res.json({'jwt': token});
   }
   else if(auth_type === 'kakao') {
     const kakao_access_token: string = content['access_token'];
     if(Boolean(kakao_access_token) === false) {
-      throw createError(400, "'access_token' must be provided!", {
+      throw createError(400, '\'access_token\' must be provided!', {
         state: 'REQUIRED_VALUE_EMPTY_ERR',
         info: ['access_token']
       });
@@ -97,12 +103,12 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
 
     // Kakao API Server 에 요청을 보내기 위한 옵션
     const options: RequestPromiseOption = {
-      "method": "GET",
-      "uri": "https://kapi.kakao.com/v2/user/me",
-      "headers": {
-        "Authorization": "Bearer " + kakao_access_token
+      'method': 'GET',
+      'uri': 'https://kapi.kakao.com/v2/user/me',
+      'headers': {
+        'Authorization': 'Bearer ' + kakao_access_token
       },
-      "resolveWithFullResponse": true
+      'resolveWithFullResponse': true
     };
 
     /* Kakao 유저 정보를 받아온다. */
@@ -117,7 +123,7 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
       const resp_body: any = JSON.parse(resp['body']); // response body 를 받아 JSON parse 진행한다.
 
       const status_code: number = parseInt(resp['statusCode'], 10) || 500;
-      const message: string = resp_body['msg'] || "Kakao API Server Error!";
+      const message: string = resp_body['msg'] || 'Kakao API Server Error!';
 
       throw createError(status_code, message, {
         state: 'KAKAO_API_ERR'
@@ -132,23 +138,26 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
 
     const auth_uuid: string = uuidv4();
 
-    // TODO: DB 접근 관련 코드 작성
+    let user_info: any = await User.findOne({social_type: 'kakao', social_id: kakao_id});
+    if(user_info === null) {
+      await User.create({name: kakao_nick, social_type: 'kakao', social_id: kakao_id});
+      user_info = await User.findOne({social_type: 'kakao', social_id: kakao_id});
+    }
 
-    // TODO: DB 접근 코드 작성 후 주석 해제 예정
     const token: string = jwt.sign({
-      //"user_id": user_data['id'],
-      //"user_name": user_data['name'],
-      "auth_uuid": auth_uuid
+      'id': user_info['_id'],
+      'name': user_info['name'],
+      'auth_uuid': auth_uuid
     }, jwt_config['secret_key'], {
-      "algorithm": jwt_config['algorithm'],
-      "expiresIn": "24h"
+      'algorithm': jwt_config['algorithm'],
+      'expiresIn': '24h'
     });
 
     res.status(200);
-    res.json({"jwt": token});
+    res.json({'jwt': token});
   }
   else {
-    throw createError(400, "'type' must be 'facebook' or 'kakao'!", {
+    throw createError(400, '\'type\' must be \'facebook\' or \'kakao\'!', {
       state: 'REQUIRED_VALUE_EMPTY_ERR',
       info: ['type']
     });
