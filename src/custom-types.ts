@@ -7,7 +7,12 @@
 import { Request, Response } from 'express';
 
 export interface CustomRequest extends Request {
-  jwt_info?: object; // Request 정보에 JWT 가 존재하고 이를 성공적으로 decode 한 경우 해당 정보가 여기에 담기게 됩니다.
+  /*
+   * 아직 JWT payload 형식을 확정하지 않아서 지금은 any type 으로 지정함.
+   * 이후에 payload 형식 확정 시 해당 type 정의해서 any 대신에 사용할 것.
+   */
+  // TODO: payload 형식 정하기
+  jwt_info?: any; // Request 정보에 JWT 가 존재하고 이를 성공적으로 decode 한 경우 해당 정보가 여기에 담기게 됩니다.
 }
 
 export interface CustomResponse extends Response {
