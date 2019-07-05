@@ -32,7 +32,13 @@ app.use('/api', api_controller);
  * NODE_ENV 에 따라 Static file serve 방식을 다르게 함
  */
 if(process.env.NODE_ENV === 'production') {
+  /* 기본적으로 요청한 file 을 전송한다. */
   app.use(express.static(path.join(__dirname, '../', 'react-app', 'build')));
+
+  /* 다만, 요청한 파일이 없을 경우 기본값으로 index.html 을 보내준다. (React 에서 URI route 관련해서 나머지를 처리한다) */
+  app.use('*', async (req: CustomRequest, res: CustomResponse) => {
+    res.sendFile(path.join(__dirname, '../', 'react-app', 'build', 'index.html'));
+  });
 }
 else {
   const proxy: httpProxy = httpProxy.createProxyServer({});
