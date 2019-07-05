@@ -18,3 +18,35 @@ export interface CustomRequest extends Request {
 export interface CustomResponse extends Response {
 
 }
+
+/* '/user' 에 POST 로 들어오는 request 의 body 형식을 정의 */
+export interface UserPost {
+  type: string; // should be 'facebook' or 'kakao'
+  access_token: string; // should be valid token belongs to 'facebook' or 'kakao'
+}
+
+/*
+ * npm 'request-promise-native' 에서 사용되는 option 의 형식을 정의
+ * 'headers' 와 'qs' 의 경우 매 사용 시마다 어떤 정보를 넣을지 모르게 때문에 any 로 정의했으며 undefined 일 수도 있어서 '?' 를 지정함.
+ */
+export interface RequestPromiseOption {
+  method: string;
+  uri: string;
+  headers?: any;
+  qs?: any;
+  resolveWithFullResponse: boolean;
+}
+
+/* facebook api request 를 통해 얻게 되는 user info 의 형식을 정의 (v3.3 기준) */
+export interface FacebookUserInfo {
+  id: number; // Facebook user's unique id (integer)
+  name: string; // Facebook user's name
+}
+
+/* kakao api request 를 통해 얻게 되는 user info 의 형식을 정의 (v2 기준) */
+export interface KakaoUserInfo {
+  id: number;
+  properties: {
+    nickname: string
+  }
+}

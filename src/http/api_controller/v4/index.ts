@@ -11,6 +11,9 @@ import { CustomRequest, CustomResponse } from '../../../custom-types';
 /* API v4 config file */
 import config from '../../../config';
 
+/* Controllers for each routes */
+import user_controller from './routes/user';
+
 const app: Application = asyncify(express());
 
 /* 기본 설정 */
@@ -68,7 +71,8 @@ app.use(async (req: CustomRequest, res: CustomResponse, next: any) => {
   next();
 });
 
-// TODO: 여기에 각 route 에 해당하는 controller 를 연결하게 된다.
+/* Attach controllers to each routes */
+app.use('/user', user_controller);
 
 /* 서버 Alive 체크를 위한 것 */
 app.get('/', async (req: CustomRequest, res: CustomResponse) => {
