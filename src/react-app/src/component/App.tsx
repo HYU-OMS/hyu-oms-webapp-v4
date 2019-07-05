@@ -13,6 +13,15 @@ import {
 
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
+import GroupIcon from '@material-ui/icons/Group';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import TocIcon from '@material-ui/icons/Toc';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import DonutSmallIcon from '@material-ui/icons/DonutSmall';
+import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 
 const drawerWidth: number = 240;
 const styles = (theme: any) => ({
@@ -53,11 +62,19 @@ const styles = (theme: any) => ({
   },
   list: {
     paddingTop: 0,
-    paddingBottom: 0
+    paddingBottom: 0,
+    height: '40px'
   },
   listItem: {
     paddingLeft: '24px',
-    paddingRight: '24px'
+    paddingRight: '24px',
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: '40px'
+  },
+  listItemIcon: {
+    width: '48px',
+    minWidth: '48px'
   },
   divider: {
     marginTop: '11.5px',
@@ -86,20 +103,137 @@ class App extends React.Component<any, any> {
   render(): any {
     const { classes, theme } = this.props;
 
-    const drawer_content = (
+    const appbar: any = (
+      <AppBar className={classes.appBar} color='inherit' position='fixed'>
+        <Toolbar className={classes.toolbar}>
+          <IconButton onClick={this.handleDrawerButtonClick} edge='start' className={classes.menuButton} color='inherit' aria-label='Menu'>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant='h6' className={classes.title}>
+            HYU-OMS
+          </Typography>
+
+          <Button color='inherit'>로그인</Button>
+          <Button color='inherit'>로그아웃</Button>
+        </Toolbar>
+      </AppBar>
+    );
+
+    const drawer_content: any = (
       <React.Fragment>
         <div className={classes.toolbar} />
         <div style={{padding: '6px'}} />
 
         <List className={classes.list}>
           <ListItem className={classes.listItem} button>
-            <ListItemIcon><HomeIcon /></ListItemIcon>
-            <ListItemText primary='홈' />
+            <ListItemIcon className={classes.listItemIcon}><HomeIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>홈</Typography>
+            </ListItemText>
           </ListItem>
         </List>
 
         <Divider className={classes.divider} />
-        
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><GroupIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>그룹</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <Divider className={classes.divider} />
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><PlaylistAddIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>주문 입력</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><TocIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>전체 주문 내역</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><PlaylistAddCheckIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>처리되지 않은 주문 내역</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <Divider className={classes.divider} />
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><FormatListNumberedIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>메뉴별 대기열</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <Divider className={classes.divider} />
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><DonutSmallIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>통계</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <Divider className={classes.divider} />
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><SettingsIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>메뉴 관리</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><SettingsApplicationsIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>세트메뉴 관리</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <List className={classes.list}>
+          <ListItem className={classes.listItem} button>
+            <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon /></ListItemIcon>
+            <ListItemText>
+              <Typography variant='button'>그룹, 멤버 관리</Typography>
+            </ListItemText>
+          </ListItem>
+        </List>
+
+        <Divider className={classes.divider} />
+
+        <div style={{padding: '6px'}} />
+
+        <Typography variant="caption" align="center" style={{color: '#888888'}}>
+          <strong>&copy; 2014 - 2019 한양대학교 한기훈</strong>
+        </Typography>
+
+        <div style={{padding: '12px'}} />
+
       </React.Fragment>
     );
 
@@ -107,19 +241,7 @@ class App extends React.Component<any, any> {
       <div className={classes.root}>
         <CssBaseline />
 
-        <AppBar className={classes.appBar} color='inherit' position='fixed'>
-          <Toolbar className={classes.toolbar}>
-            <IconButton onClick={this.handleDrawerButtonClick} edge='start' className={classes.menuButton} color='inherit' aria-label='Menu'>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6' className={classes.title}>
-              HYU-OMS
-            </Typography>
-
-            <Button color='inherit'>로그인</Button>
-            <Button color='inherit'>로그아웃</Button>
-          </Toolbar>
-        </AppBar>
+        {appbar}
 
         <Hidden xsDown implementation='css'>
           <Drawer

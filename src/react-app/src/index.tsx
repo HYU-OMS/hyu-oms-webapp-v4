@@ -11,6 +11,8 @@ import * as serviceWorker from './serviceWorker';
 
 import App from './component/App';
 
+import 'typeface-roboto';
+
 const store = createStore(reducer);
 const max_snack = (window.innerWidth < 600) ? 1 : 5;
 const horizontal_position = (window.innerWidth < 600) ? 'center': 'left';
