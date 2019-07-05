@@ -1,5 +1,8 @@
 import React from 'react';
+import { Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
+import axios from 'axios';
 import {
   CssBaseline,
   AppBar, Toolbar,
@@ -22,6 +25,8 @@ import DonutSmallIcon from '@material-ui/icons/DonutSmall';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+
+import Home from './home';
 
 const drawerWidth: number = 240;
 const styles = (theme: any) => ({
@@ -81,16 +86,36 @@ const styles = (theme: any) => ({
     marginBottom: '11.5px',
     paddingTop: '0.5px',
     paddingBottom: '0.5px'
+  },
+  content: {
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: drawerWidth,
+    },
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
   }
 });
 
+/* React 에서 import 되지 않은 라이브러리 사용을 위해 아래 2줄의 코드를 추가. */
+declare let FB: any;
+declare let Kakao: any;
 
 class App extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
 
     this.state = {
-      is_drawer_open: (window.innerWidth >= 600)
+      is_drawer_open: (window.innerWidth >= 600),
+      is_signin_dialog_open: false
     };
   }
 
@@ -99,6 +124,80 @@ class App extends React.Component<any, any> {
       is_drawer_open: !this.state.is_drawer_open
     });
   };
+
+  handleFacebookLogin = () => {
+    FB.login((response: any) => {
+      if(response.status === 'connected') {
+        const access_token = response['authResponse']['accessToken'];
+
+        this.setState({
+          "is_signin_in_progress": true
+        });
+
+        const url = this.props.api_url + "/v1/user";
+        const content = {
+          "type": "facebook",
+          "access_token": access_token
+        };
+
+        axios.post(url, content)
+          .then((response: any) => {
+            this.props.signIn(response.data.jwt);
+            this.setState({
+              "is_signin_in_progress": false,
+              "is_signin_dialog_open": false
+            });
+
+            this.props.history.push("/group");
+          })
+          .catch((error: any) => {
+            alert(error.response.data.message);
+            this.setState({
+              "is_signin_in_progress": false
+            });
+          });
+      }
+    });
+  };
+
+  handleKakaoLogin = () => {
+    Kakao.Auth.login({
+      success: (authObj: any) => {
+        const access_token = authObj['access_token'];
+
+        this.setState({
+          "is_signin_in_progress": true
+        });
+
+        const url = this.props.api_url + "/v1/user";
+        const content = {
+          "type": "kakao",
+          "access_token": access_token
+        };
+
+        axios.post(url, content)
+          .then((response: any) => {
+            this.props.signIn(response.data.jwt);
+            this.setState({
+              "is_signin_in_progress": false,
+              "is_signin_dialog_open": false
+            });
+
+            this.props.history.push("/group");
+          })
+          .catch((error: any) => {
+            alert(error.response.data.message);
+            this.setState({
+              "is_signin_in_progress": false
+            });
+          });
+      },
+      fail: (err: any) => {
+        console.log(err);
+      }
+    });
+  };
+
 
   render(): any {
     const { classes, theme } = this.props;
@@ -125,7 +224,7 @@ class App extends React.Component<any, any> {
         <div style={{padding: '6px'}} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/main'}>
             <ListItemIcon className={classes.listItemIcon}><HomeIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>홈</Typography>
@@ -136,7 +235,7 @@ class App extends React.Component<any, any> {
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/group'}>
             <ListItemIcon className={classes.listItemIcon}><GroupIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>그룹</Typography>
@@ -147,7 +246,7 @@ class App extends React.Component<any, any> {
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/request'}>
             <ListItemIcon className={classes.listItemIcon}><PlaylistAddIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>주문 입력</Typography>
@@ -156,7 +255,7 @@ class App extends React.Component<any, any> {
         </List>
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/list'}>
             <ListItemIcon className={classes.listItemIcon}><TocIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>전체 주문 내역</Typography>
@@ -165,7 +264,7 @@ class App extends React.Component<any, any> {
         </List>
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/unverified'}>
             <ListItemIcon className={classes.listItemIcon}><PlaylistAddCheckIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>처리되지 않은 주문 내역</Typography>
@@ -176,7 +275,7 @@ class App extends React.Component<any, any> {
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/queue'}>
             <ListItemIcon className={classes.listItemIcon}><FormatListNumberedIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>메뉴별 대기열</Typography>
@@ -187,7 +286,7 @@ class App extends React.Component<any, any> {
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/statistics'}>
             <ListItemIcon className={classes.listItemIcon}><DonutSmallIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>통계</Typography>
@@ -198,7 +297,7 @@ class App extends React.Component<any, any> {
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/menu'}>
             <ListItemIcon className={classes.listItemIcon}><SettingsIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>메뉴 관리</Typography>
@@ -207,7 +306,7 @@ class App extends React.Component<any, any> {
         </List>
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/setmenu'}>
             <ListItemIcon className={classes.listItemIcon}><SettingsApplicationsIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>세트메뉴 관리</Typography>
@@ -216,7 +315,7 @@ class App extends React.Component<any, any> {
         </List>
 
         <List className={classes.list}>
-          <ListItem className={classes.listItem} button>
+          <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/group_and_member'}>
             <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon /></ListItemIcon>
             <ListItemText>
               <Typography variant='button'>그룹, 멤버 관리</Typography>
@@ -228,13 +327,21 @@ class App extends React.Component<any, any> {
 
         <div style={{padding: '6px'}} />
 
-        <Typography variant="caption" align="center" style={{color: '#888888'}}>
+        <Typography variant='caption' style={{color: '#888888', textAlign: 'center'}}>
           <strong>&copy; 2014 - 2019 한양대학교 한기훈</strong>
         </Typography>
 
         <div style={{padding: '12px'}} />
 
       </React.Fragment>
+    );
+
+    /* Route로 변하는 부분을 정의 */
+    const RouteView = (
+      <Switch>
+        <Route path="/main" component={Home} />
+        <Redirect to="/main" />
+      </Switch>
     );
 
     return (
@@ -271,9 +378,22 @@ class App extends React.Component<any, any> {
             {drawer_content}
           </Drawer>
         </Hidden>
+
+        <main className={classNames(classes.content, {
+          [classes.contentShift]: !this.state.is_drawer_open,
+        })}>
+          <div className={classes.toolbar} />
+
+          {RouteView}
+
+          <br/>
+        </main>
       </div>
     );
   }
 }
 
-export default withStyles(styles, { 'withTheme': true })(App);
+// TODO: 나중에 Type 제대로 정의해서 이 해괴망측한 코드를 좀 없애볼 것!
+const styleAddedApp: any = withStyles(styles, { 'withTheme': true })(App);
+const routerAddedApp: any = withRouter(styleAddedApp);
+export default routerAddedApp;
