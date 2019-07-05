@@ -30,7 +30,7 @@ app.use(async (req: CustomRequest, res: CustomResponse, next: any) => {
 });
 
 /* error handler */
-app.use(async (err: any, req: CustomRequest, res: CustomResponse) => {
+app.use(async (err: any, req: CustomRequest, res: CustomResponse, next: any) => {
   const status_code: number = err.status || 500;
 
   /* development 환경일 경우 콘솔에 error 표시 */
