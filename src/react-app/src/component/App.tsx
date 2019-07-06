@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
-import { withStyles, Theme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import axios from 'axios';
@@ -13,8 +13,12 @@ import {
   List, ListItem, ListItemIcon, ListItemText,
   Divider,
   Hidden,
-  Dialog, DialogTitle, DialogContent
+  Dialog, DialogTitle, DialogContent,
+  Badge
 } from '@material-ui/core';
+
+/* To use Typescript types */
+import { Theme } from '@material-ui/core/styles';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
@@ -27,6 +31,8 @@ import DonutSmallIcon from '@material-ui/icons/DonutSmall';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 
 import { signIn, signOut } from '../action/auth';
 
@@ -256,8 +262,19 @@ class App extends React.Component<any, any> {
             HYU-OMS
           </Typography>
 
-          <Button onClick={this.handleSigninButtonClick} color='inherit'>로그인</Button>
-          <Button onClick={this.handleSignoutButtonClick} color='inherit'>로그아웃</Button>
+          <IconButton color='default'>
+            <Badge badgeContent={4} color='secondary'>
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+
+          <IconButton color='default'>
+            <NotificationsNoneIcon />
+          </IconButton>
+
+          <Button onClick={this.handleSignoutButtonClick} color='default'>로그아웃</Button>
+
+          <Button onClick={this.handleSigninButtonClick} color='default'>로그인</Button>
         </Toolbar>
       </AppBar>
     );

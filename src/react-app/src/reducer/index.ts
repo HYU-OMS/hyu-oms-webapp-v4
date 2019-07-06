@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import auth from './auth';
+import Auth from './auth';
+import RealTimeSync from './realtimesync';
 
 const HYU_OMS_APP = combineReducers({
-  auth
+  Auth,
+  RealTimeSync
 });
 
 export default HYU_OMS_APP;

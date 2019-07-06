@@ -5,7 +5,7 @@ const SELECT_GROUP = 'SELECT_GROUP';
 const signIn = (jwt: string) => {
   localStorage.setItem('jwt', jwt);
 
-  return {'type': SIGN_IN, 'jwt': jwt};
+  return {type: SIGN_IN, jwt: jwt};
 };
 
 const signOut = () => {
@@ -13,14 +13,14 @@ const signOut = () => {
   localStorage.removeItem('group_id');
   localStorage.removeItem('role');
 
-  return {'type': SIGN_OUT};
+  return {type: SIGN_OUT};
 };
 
 const selectGroup = (group_id: string, role: number) => {
   localStorage.setItem('group_id', group_id);
   localStorage.setItem('role', role.toString(10));
 
-  return {'type': SELECT_GROUP, 'group_id': group_id, 'role': role};
+  return {type: SELECT_GROUP, group_id: group_id, role: role};
 };
 
 export {
