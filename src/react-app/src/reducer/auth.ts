@@ -9,7 +9,7 @@ const initialState: ReduxAuthState = {
   'api_url': ((): string => {
     if(process.env.NODE_ENV === 'development') {
       if(!Boolean(process.env.REACT_APP_API_URL)) {
-        return 'http://localhost:3000';
+        return 'http://localhost:3000/api/v4';
       }
       else {
         return process.env.REACT_APP_API_URL as string;
