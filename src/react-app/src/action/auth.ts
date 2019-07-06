@@ -2,7 +2,7 @@ const SIGN_IN = 'SIGN_IN';
 const SIGN_OUT = 'SIGN_OUT';
 const SELECT_GROUP = 'SELECT_GROUP';
 
-const signIn = (jwt: any) => {
+const signIn = (jwt: string) => {
   localStorage.setItem('jwt', jwt);
 
   return {'type': SIGN_IN, 'jwt': jwt};
