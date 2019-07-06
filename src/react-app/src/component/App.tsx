@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import axios from 'axios';
 import {
@@ -11,7 +12,8 @@ import {
   Drawer,
   List, ListItem, ListItemIcon, ListItemText,
   Divider,
-  Hidden
+  Hidden,
+  Dialog, DialogTitle, DialogContent
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -26,10 +28,12 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 
+import { signIn, signOut } from '../action/auth';
+
 import Home from './home';
 
 const drawerWidth: number = 240;
-const styles = (theme: any) => ({
+const styles: any = (theme: any) => ({
   root: {
     flexGrow: 1,
     minHeight: '100vh',
@@ -106,6 +110,21 @@ const styles = (theme: any) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+  },
+  fbLoginButton: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1 / 2),
+    backgroundColor: '#3b5998',
+    borderColor: '#3b5998',
+    color: '#ffffff',
+    textTransform: 'initial'
+  },
+  kakaoLoginButton: {
+    marginTop: theme.spacing(1 / 2),
+    marginBottom: theme.spacing(1),
+    borderColor: '#f9df33',
+    backgroundColor: '#f9df33',
+    textTransform: 'initial'
   }
 });
 
@@ -127,6 +146,23 @@ class App extends React.Component<any, any> {
   handleDrawerButtonClick = (): void => {
     this.setState({
       is_drawer_open: !this.state.is_drawer_open
+    });
+  };
+
+  handleSigninButtonClick = (): void => {
+    this.setState({
+      is_authenticate_dialog_open: true
+    });
+  };
+
+  handleSignoutButtonClick = (e: any) => {
+    this.props.history.push('/main');
+    this.props.signOut();
+  };
+
+  handleSigninDialogClose = () => {
+    this.setState({
+      is_authenticate_dialog_open: false
     });
   };
 
@@ -203,7 +239,6 @@ class App extends React.Component<any, any> {
     });
   };
 
-
   render(): any {
     const { classes, theme } = this.props;
 
@@ -217,8 +252,8 @@ class App extends React.Component<any, any> {
             HYU-OMS
           </Typography>
 
-          <Button color='inherit'>로그인</Button>
-          <Button color='inherit'>로그아웃</Button>
+          <Button onClick={this.handleSigninButtonClick} color='inherit'>로그인</Button>
+          <Button onClick={this.handleSignoutButtonClick} color='inherit'>로그아웃</Button>
         </Toolbar>
       </AppBar>
     );
@@ -369,6 +404,33 @@ class App extends React.Component<any, any> {
       </Switch>
     );
 
+    /* 로그인 Dialog */
+    const signinDialog = (
+      <Dialog open={this.state.is_authenticate_dialog_open} onClose={this.handleSigninDialogClose} aria-labelledby='signin-dialog'>
+        <DialogTitle style={{textAlign: 'center'}}>로그인 방법</DialogTitle>
+
+        <Divider />
+
+        <DialogContent>
+          <Button
+            className={classes.fbLoginButton}
+            onClick={this.handleFacebookLogin}
+            color='default' variant='outlined' size='large'
+            fullWidth
+          >
+            Facebook
+          </Button>
+          <Button
+            className={classes.kakaoLoginButton}
+            onClick={this.handleKakaoLogin}
+            color='default' variant='outlined' size='large'
+            fullWidth>
+            Kakao
+          </Button>
+        </DialogContent>
+      </Dialog>
+    );
+
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -413,12 +475,36 @@ class App extends React.Component<any, any> {
 
           <br/>
         </main>
+
+        {signinDialog}
       </div>
     );
   }
 }
 
+const mapStateToProps = (state: any): any => {
+  return {
+    'jwt': state.auth.jwt,
+    'api_url': state.auth.api_url,
+    'group_id': state.auth.group_id,
+    'role': state.auth.role
+  };
+};
+
+const mapDispatchToProps = (dispatch: any): any => {
+  return {
+    'signIn': (jwt: string) => {
+      dispatch(signIn(jwt));
+    },
+    'signOut': () => {
+      dispatch(signOut());
+    }
+  };
+};
+
+
 // TODO: 나중에 Type 제대로 정의해서 이 해괴망측한 코드를 좀 없애볼 것!
 const styleAddedApp: any = withStyles(styles, { 'withTheme': true })(App);
-const routerAddedApp: any = withRouter(styleAddedApp);
+const reduxStateAddedApp: any = connect(mapStateToProps, mapDispatchToProps)(styleAddedApp);
+const routerAddedApp: any = withRouter(reduxStateAddedApp);
 export default routerAddedApp;
