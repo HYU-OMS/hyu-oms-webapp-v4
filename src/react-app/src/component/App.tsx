@@ -119,7 +119,8 @@ class App extends React.Component<any, any> {
 
     this.state = {
       is_drawer_open: (window.innerWidth >= 600),
-      is_signin_dialog_open: false
+      is_signin_dialog_open: false,
+      is_signin_in_progress: false
     };
   }
 
@@ -135,21 +136,21 @@ class App extends React.Component<any, any> {
         const access_token = response['authResponse']['accessToken'];
 
         this.setState({
-          'is_signin_in_progress': true
+          is_signin_in_progress: true
         });
 
         const url = this.props.api_url + '/v1/user';
         const content = {
-          'type': 'facebook',
-          'access_token': access_token
+          type: 'facebook',
+          access_token: access_token
         };
 
         axios.post(url, content)
           .then((response: any) => {
             this.props.signIn(response.data.jwt);
             this.setState({
-              'is_signin_in_progress': false,
-              'is_signin_dialog_open': false
+              is_signin_in_progress: false,
+              is_signin_dialog_open: false
             });
 
             this.props.history.push('/group');
@@ -157,7 +158,7 @@ class App extends React.Component<any, any> {
           .catch((error: any) => {
             alert(error.response.data.message);
             this.setState({
-              'is_signin_in_progress': false
+              is_signin_in_progress: false
             });
           });
       }
@@ -170,21 +171,21 @@ class App extends React.Component<any, any> {
         const access_token = authObj['access_token'];
 
         this.setState({
-          'is_signin_in_progress': true
+          is_signin_in_progress: true
         });
 
         const url = this.props.api_url + '/v1/user';
         const content = {
-          'type': 'kakao',
-          'access_token': access_token
+          type: 'kakao',
+          access_token: access_token
         };
 
         axios.post(url, content)
           .then((response: any) => {
             this.props.signIn(response.data.jwt);
             this.setState({
-              'is_signin_in_progress': false,
-              'is_signin_dialog_open': false
+              is_signin_in_progress: false,
+              is_signin_dialog_open: false
             });
 
             this.props.history.push('/group');
@@ -192,7 +193,7 @@ class App extends React.Component<any, any> {
           .catch((error: any) => {
             alert(error.response.data.message);
             this.setState({
-              'is_signin_in_progress': false
+              is_signin_in_progress: false
             });
           });
       },
