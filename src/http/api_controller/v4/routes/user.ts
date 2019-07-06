@@ -82,7 +82,6 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
 
     const token: string = jwt.sign({
       'id': user_info['_id'],
-      'name': user_info['name'],
       'auth_uuid': auth_uuid
     }, jwt_config['secret_key'], {
       'algorithm': jwt_config['algorithm'],
@@ -146,7 +145,6 @@ router.post('/', async (req: CustomRequest, res: CustomResponse) => {
 
     const token: string = jwt.sign({
       'id': user_info['_id'],
-      'name': user_info['name'],
       'auth_uuid': auth_uuid
     }, jwt_config['secret_key'], {
       'algorithm': jwt_config['algorithm'],
