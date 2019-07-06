@@ -27,7 +27,7 @@ const initialState: ReduxAuthState = {
   })()
 };
 
-const auth = (state: ReduxAuthState = initialState, action: any) => {
+const auth: any = (state: ReduxAuthState = initialState, action: any) => {
   switch (action.type) {
     case SIGN_IN:
       return Object.assign({}, state, {

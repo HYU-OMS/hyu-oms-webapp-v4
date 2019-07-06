@@ -1,6 +1,6 @@
-const SIGN_IN = 'SIGN_IN';
-const SIGN_OUT = 'SIGN_OUT';
-const SELECT_GROUP = 'SELECT_GROUP';
+const SIGN_IN: string = 'SIGN_IN';
+const SIGN_OUT: string = 'SIGN_OUT';
+const SELECT_GROUP: string = 'SELECT_GROUP';
 
 const signIn = (jwt: string) => {
   localStorage.setItem('jwt', jwt);
