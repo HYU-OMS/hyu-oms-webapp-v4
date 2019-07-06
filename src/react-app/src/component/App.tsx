@@ -95,6 +95,10 @@ const styles: any = (theme: any) => ({
     paddingTop: '0.5px',
     paddingBottom: '0.5px'
   },
+  drawerTopMostDivider: {
+    paddingTop: '0.5px',
+    paddingBottom: '0.5px'
+  },
   content: {
     [theme.breakpoints.up('sm')]: {
       marginLeft: drawerWidth,
@@ -261,7 +265,12 @@ class App extends React.Component<any, any> {
     const drawer_content: any = (
       <React.Fragment>
         <div className={classes.toolbar} />
-        <div style={{padding: '6px'}} />
+
+        <Hidden smUp>
+          <Divider className={classes.drawerTopMostDivider} />
+        </Hidden>
+
+        <div style={{padding: '5px'}} />
 
         <List className={classes.list}>
           <Link to='/main' className={classes.link}>
