@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, Theme } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import axios from 'axios';
@@ -33,7 +33,7 @@ import { signIn, signOut } from '../action/auth';
 import Home from './home';
 
 const drawerWidth: number = 240;
-const styles: any = (theme: any) => ({
+const styles: any = (theme: Theme) => ({
   root: {
     flexGrow: 1,
     minHeight: '100vh',
@@ -513,7 +513,7 @@ const mapDispatchToProps = (dispatch: any): any => {
 
 
 // TODO: 나중에 Type 제대로 정의해서 이 해괴망측한 코드를 좀 없애볼 것!
-const styleAddedApp: any = withStyles(styles, { 'withTheme': true })(App);
+const styleAddedApp: any = withStyles(styles, { withTheme: true })(App);
 const reduxStateAddedApp: any = connect(mapStateToProps, mapDispatchToProps)(styleAddedApp);
 const routerAddedApp: any = withRouter(reduxStateAddedApp);
 export default routerAddedApp;
