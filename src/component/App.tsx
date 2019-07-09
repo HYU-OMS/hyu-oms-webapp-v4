@@ -8,7 +8,7 @@ import {
   CssBaseline,
   AppBar, Toolbar,
   Typography,
-  Button, IconButton,
+  Button, IconButton, Icon,
   Drawer,
   List, ListItem, ListItemIcon, ListItemText,
   Divider,
@@ -16,6 +16,7 @@ import {
   Dialog, DialogTitle, DialogContent,
   Badge
 } from '@material-ui/core';
+import { loadCSS } from 'fg-loadcss';
 
 /* To use Typescript types */
 import { Theme } from '@material-ui/core/styles';
@@ -151,6 +152,16 @@ class App extends React.Component<any, any> {
       is_authenticate_dialog_open: false,
       is_authenticate_in_progress: false
     };
+  }
+
+  componentDidMount(): void {
+    loadCSS(
+      'https://use.fontawesome.com/releases/v5.9.0/css/all.css'
+    );
+
+    loadCSS(
+      'https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css'
+    );
   }
 
   handleDrawerButtonClick = (): void => {
@@ -444,14 +455,14 @@ class App extends React.Component<any, any> {
             color='default' variant='outlined' size='large'
             fullWidth
           >
-            Facebook
+            <Icon className='fab fa-facebook-square' /> &nbsp;Facebook
           </Button>
           <Button
             className={classes.kakaoLoginButton}
             onClick={this.handleKakaoLogin}
             color='default' variant='outlined' size='large'
             fullWidth>
-            Kakao
+            <Icon className='xi-kakaotalk' /> &nbsp;Kakao
           </Button>
         </DialogContent>
       </Dialog>
