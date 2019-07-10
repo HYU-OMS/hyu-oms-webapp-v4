@@ -16,7 +16,6 @@ import {
   Dialog, DialogTitle, DialogContent,
   Badge
 } from '@material-ui/core';
-import { loadCSS } from 'fg-loadcss';
 
 /* To use Typescript types */
 import { Theme } from '@material-ui/core/styles';
@@ -152,14 +151,6 @@ class App extends React.Component<any, any> {
       is_authenticate_dialog_open: false,
       is_authenticate_in_progress: false
     };
-  }
-
-  componentDidMount(): void {
-    /* Font Awesome */
-    loadCSS('https://use.fontawesome.com/releases/v5.9.0/css/all.css');
-
-    /* XEIcon - for Kakao Icon */
-    loadCSS('https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css');
   }
 
   handleDrawerButtonClick = (): void => {
