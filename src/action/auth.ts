@@ -2,13 +2,13 @@ const SIGN_IN: string = 'SIGN_IN';
 const SIGN_OUT: string = 'SIGN_OUT';
 const SELECT_GROUP: string = 'SELECT_GROUP';
 
-const signIn = (jwt: string) => {
+const signIn = (jwt: string): any => {
   localStorage.setItem('jwt', jwt);
 
   return {type: SIGN_IN, jwt: jwt};
 };
 
-const signOut = () => {
+const signOut = (): any => {
   localStorage.removeItem('jwt');
   localStorage.removeItem('group_id');
   localStorage.removeItem('role');
@@ -16,7 +16,7 @@ const signOut = () => {
   return {type: SIGN_OUT};
 };
 
-const selectGroup = (group_id: string, role: number) => {
+const selectGroup = (group_id: string, role: number): any => {
   localStorage.setItem('group_id', group_id);
   localStorage.setItem('role', role.toString(10));
 
