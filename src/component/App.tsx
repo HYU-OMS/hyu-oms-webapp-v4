@@ -174,18 +174,18 @@ class App extends React.Component<any, any> {
     });
   };
 
-  handleSignoutButtonClick = (e: any) => {
+  handleSignoutButtonClick = (e: any): void => {
     this.props.history.push('/main');
     this.props.signOut();
   };
 
-  handleSigninDialogClose = () => {
+  handleSigninDialogClose = (): void => {
     this.setState({
       is_authenticate_dialog_open: false
     });
   };
 
-  handleFacebookLogin = () => {
+  handleFacebookLogin = (): void => {
     FB.login((response: any) => {
       if(response.status === 'connected') {
         const access_token = response['authResponse']['accessToken'];
@@ -220,7 +220,7 @@ class App extends React.Component<any, any> {
     });
   };
 
-  handleKakaoLogin = () => {
+  handleKakaoLogin = (): void => {
     Kakao.Auth.login({
       success: (authObj: any) => {
         const access_token = authObj['access_token'];
@@ -432,7 +432,7 @@ class App extends React.Component<any, any> {
     );
 
     /* Route로 변하는 부분을 정의 */
-    const RouteView = (
+    const RouteView: any = (
       <Switch>
         <Route path='/main' component={Home} />
         <Redirect to='/main' />
@@ -440,7 +440,7 @@ class App extends React.Component<any, any> {
     );
 
     /* 로그인 Dialog */
-    const signinDialog = (
+    const signinDialog: any = (
       <Dialog open={this.state.is_authenticate_dialog_open} onClose={this.handleSigninDialogClose} aria-labelledby='signin-dialog'>
         <DialogTitle style={{textAlign: 'center'}}>로그인 방법</DialogTitle>
 
