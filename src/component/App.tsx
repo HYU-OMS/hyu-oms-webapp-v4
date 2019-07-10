@@ -155,13 +155,11 @@ class App extends React.Component<any, any> {
   }
 
   componentDidMount(): void {
-    loadCSS(
-      'https://use.fontawesome.com/releases/v5.9.0/css/all.css'
-    );
+    /* Font Awesome */
+    loadCSS('https://use.fontawesome.com/releases/v5.9.0/css/all.css');
 
-    loadCSS(
-      'https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css'
-    );
+    /* XEIcon - for Kakao Icon */
+    loadCSS('https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css');
   }
 
   handleDrawerButtonClick = (): void => {

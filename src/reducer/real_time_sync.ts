@@ -4,7 +4,7 @@ import {
   QUEUE_UPDATE,
   MENU_UPDATE,
   SETMENU_UPDATE
-} from '../action/realtimesync';
+} from '../action/real_time_sync';
 
 const initialState = {
   group_updated_list: [],
