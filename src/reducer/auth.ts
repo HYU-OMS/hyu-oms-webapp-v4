@@ -30,22 +30,22 @@ const initialState: ReduxAuthState = {
 const auth: any = (state: ReduxAuthState = initialState, action: any) => {
   switch (action.type) {
     case SIGN_IN:
-      return Object.assign({}, state, {
-        jwt: action.jwt,
-      });
+      return {...state,
+        jwt: action.jwt
+      };
 
     case SIGN_OUT:
-      return Object.assign({}, state, {
+      return {...state,
         jwt: null,
         group_id: null,
         role: null
-      });
+      };
 
     case SELECT_GROUP:
-      return Object.assign({}, state, {
+      return {...state,
         group_id: action.group_id,
         role: action.role
-      });
+      };
 
     default:
       return state;
