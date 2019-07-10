@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { loadCSS } from 'fg-loadcss';
 
 import reducer from './reducer';
 import App from './component/App';
 import * as serviceWorker from './serviceWorker';
 
-import 'typeface-roboto';
+/* Load Roboto Font from Google CDN */
+loadCSS('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
 
 const store = createStore(reducer);
 
