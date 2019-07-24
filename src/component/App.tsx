@@ -195,7 +195,7 @@ class App extends React.Component<any, any> {
           is_authenticate_in_progress: true
         });
 
-        const url = this.props.api_url + '/v1/user';
+        const url = this.props.api_url + '/v4/user';
         const content = {
           type: 'facebook',
           access_token: access_token
@@ -230,7 +230,7 @@ class App extends React.Component<any, any> {
           is_authenticate_in_progress: true
         });
 
-        const url = this.props.api_url + '/v1/user';
+        const url = this.props.api_url + '/v4/user';
         const content = {
           type: 'kakao',
           access_token: access_token
