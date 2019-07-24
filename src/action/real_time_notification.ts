@@ -1,21 +1,24 @@
+/* To use Typescript types */
+import { RealTimeNotificationItem } from '../custom-types';
+
 const ORDER_UPDATE: string = 'ORDER_UPDATE';
 const QUEUE_UPDATE: string = 'QUEUE_UPDATE';
 const MENU_UPDATE: string = 'MENU_UPDATE';
 const SETMENU_UPDATE: string = 'SETMENU_UPDATE';
 
-const orderUpdate = (data: any) => {
+const orderUpdate = (data: RealTimeNotificationItem) => {
   return {type: ORDER_UPDATE, data: data};
 };
 
-const queueUpdate = (data: any) => {
+const queueUpdate = (data: RealTimeNotificationItem) => {
   return {type: QUEUE_UPDATE, data: data};
 };
 
-const menuUpdate = (data: any) => {
+const menuUpdate = (data: RealTimeNotificationItem) => {
   return {type: MENU_UPDATE, data: data};
 };
 
-const setmenuUpdate = (data: any) => {
+const setmenuUpdate = (data: RealTimeNotificationItem) => {
   return {type: MENU_UPDATE, data: data};
 };
 

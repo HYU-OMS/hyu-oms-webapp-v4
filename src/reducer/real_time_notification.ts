@@ -5,14 +5,18 @@ import {
   SETMENU_UPDATE
 } from '../action/real_time_notification';
 
-const initialState = {
+/* To use Typescript types */
+import { ReduxRealTimeNotificationState } from '../custom-types';
+
+const initialState: ReduxRealTimeNotificationState = {
+  notifications: [],
   order_last_updated: new Date(),
   queue_last_updated: new Date(),
   menu_last_updated: new Date(),
   setmenu_last_updated: new Date()
 };
 
-const real_time_sync = (state = initialState, action: any) => {
+const real_time_sync = (state: ReduxRealTimeNotificationState = initialState, action: any) => {
   switch (action.type) {
     case ORDER_UPDATE:
       return {...state,
