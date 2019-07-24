@@ -20,7 +20,7 @@ class Home extends React.Component {
 
         <p>
           현재 HYU-OMS Version 4 의 개발이 진행 중입니다. <br/>
-          <a href='https://github.com/HYU-OMS/hyu-oms-v4'>https://github.com/HYU-OMS/hyu-oms-v4</a> 에서 확인하실 수 있습니다.
+          문의: <a href='mailto:khhan1993@gmail.com'>khhan1993@gmail.com</a>
         </p>
 
         <p>

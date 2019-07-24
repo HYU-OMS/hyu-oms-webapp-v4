@@ -37,6 +37,16 @@ import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import { signIn, signOut } from '../action/auth';
 
 import Home from './home';
+import Group from './group';
+import OrderRequest from './order/request';
+import OrderList from './order/list';
+import OrderUnverified from './order/unverified';
+import Queue from './queue';
+import Statistics from './statistics';
+import ManageMenu from './manage/menu';
+import ManageSetmenu from './manage/setmenu';
+import ManageGroup from './manage/group';
+import ManageMember from './manage/member';
 
 const drawerWidth: number = 240;
 const styles: any = (theme: Theme) => ({
@@ -342,7 +352,7 @@ class App extends React.Component<any, any> {
             <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/unverified'}>
               <ListItemIcon className={classes.listItemIcon}><PlaylistAddCheckIcon /></ListItemIcon>
               <ListItemText>
-                <Typography variant='button'>처리되지 않은 주문 내역</Typography>
+                <Typography variant='button'>미처리 주문 내역</Typography>
               </ListItemText>
             </ListItem>
           </Link>
@@ -399,11 +409,22 @@ class App extends React.Component<any, any> {
         </List>
 
         <List className={classes.list}>
-          <Link to='/manage/group_and_member' className={classes.link}>
-            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/group_and_member'}>
+          <Link to='/manage/group' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/group'}>
               <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon /></ListItemIcon>
               <ListItemText>
-                <Typography variant='button'>그룹, 멤버 관리</Typography>
+                <Typography variant='button'>그룹 관리</Typography>
+              </ListItemText>
+            </ListItem>
+          </Link>
+        </List>
+
+        <List className={classes.list}>
+          <Link to='/manage/member' className={classes.link}>
+            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/member'}>
+              <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon /></ListItemIcon>
+              <ListItemText>
+                <Typography variant='button'>멤버 관리</Typography>
               </ListItemText>
             </ListItem>
           </Link>
@@ -426,6 +447,22 @@ class App extends React.Component<any, any> {
     const RouteView: any = (
       <Switch>
         <Route path='/main' component={Home} />
+
+        <Route path='/group' component={Group} />
+
+        <Route path='/order/request' component={OrderRequest} />
+        <Route path='/order/list' component={OrderList} />
+        <Route path='/order/unverified' component={OrderUnverified} />
+
+        <Route path='/queue' component={Queue} />
+
+        <Route path='/statistics' component={Statistics} />
+
+        <Route path='/manage/menu' component={ManageMenu} />
+        <Route path='/manage/setmenu' component={ManageSetmenu} />
+        <Route path='/manage/group' component={ManageGroup} />
+        <Route path='/manage/member' component={ManageMember} />
+
         <Redirect to='/main' />
       </Switch>
     );
