@@ -12,7 +12,8 @@ import {
 import {
   ReportProblem as ReportProblemIcon,
   HowToReg as HowToRegIcon,
-  PersonAddOutlined as PersonAddIcon
+  PersonAddOutlined as PersonAddIcon,
+  PersonAddDisabledOutlined as PersonAddDisabledIcon
 } from '@material-ui/icons';
 import { withStyles, Theme } from '@material-ui/core/styles';
 
@@ -50,7 +51,7 @@ class Group extends React.Component<any, any> {
           </Typography>
 
           <List dense>
-            <ListItem button>
+            <ListItem disabled>
               <ListItemAvatar>
                 <Avatar>
                   ?
@@ -58,7 +59,7 @@ class Group extends React.Component<any, any> {
               </ListItemAvatar>
               <ListItemText primary="그룹이 없습니다" secondary="??? ?, ????" />
               <ListItemSecondaryAction>
-                <IconButton edge="end">
+                <IconButton edge="end" disabled>
                   <ReportProblemIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -84,7 +85,7 @@ class Group extends React.Component<any, any> {
                   A
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="가입되지 않은 그룹 1" secondary="Jan 7, 2014" />
+              <ListItemText primary="가입 안한 그룹" secondary="Jan 7, 2014" />
               <ListItemSecondaryAction>
                 <IconButton edge="end">
                   <PersonAddIcon />
@@ -92,16 +93,16 @@ class Group extends React.Component<any, any> {
               </ListItemSecondaryAction>
             </ListItem>
 
-            <ListItem button>
+            <ListItem button disabled>
               <ListItemAvatar>
                 <Avatar>
                   ㄷ
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="가입되지 않은 그룹 2" secondary="July 20, 2014" />
+              <ListItemText primary="가입 승인 대기" secondary="July 20, 2014" />
               <ListItemSecondaryAction>
-                <IconButton edge="end">
-                  <PersonAddIcon />
+                <IconButton edge="end" disabled>
+                  <PersonAddDisabledIcon />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
