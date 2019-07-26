@@ -20,19 +20,22 @@ import {
 /* To use Typescript types */
 import { Theme } from '@material-ui/core/styles';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
-import GroupIcon from '@material-ui/icons/Group';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import TocIcon from '@material-ui/icons/Toc';
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
-import DonutSmallIcon from '@material-ui/icons/DonutSmall';
-import SettingsIcon from '@material-ui/icons/Settings';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
-import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import {
+  Menu as MenuIcon,
+  Home as HomeIcon,
+  Group as GroupIcon,
+  PlaylistAdd as PlaylistAddIcon,
+  Toc as TocIcon,
+  FormatListNumbered as FormatListNumberedIcon,
+  DonutSmall as DonutSmallIcon,
+  Settings as SettingsIcon,
+  SettingsOutlined as SettingsOutlinedIcon,
+  PeopleOutline as PeopleOutlineIcon,
+  Person as PersonIcon,
+  Notifications as NotificationsIcon,
+  NotificationsNone as NotificationsNoneIcon,
+  ReceiptOutlined as ReceiptOutlinedIcon
+} from '@material-ui/icons';
 
 import { signIn, signOut } from '../action/auth';
 
@@ -121,8 +124,8 @@ const styles: any = (theme: Theme) => ({
     },
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -339,7 +342,7 @@ class App extends React.Component<any, any> {
         <List className={classes.list}>
           <Link to='/order/list' className={classes.link}>
             <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/list'}>
-              <ListItemIcon className={classes.listItemIcon}><TocIcon /></ListItemIcon>
+              <ListItemIcon className={classes.listItemIcon}><ReceiptOutlinedIcon /></ListItemIcon>
               <ListItemText>
                 <Typography variant='button'>전체 주문 내역</Typography>
               </ListItemText>
@@ -350,7 +353,7 @@ class App extends React.Component<any, any> {
         <List className={classes.list}>
           <Link to='/order/unverified' className={classes.link}>
             <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/order/unverified'}>
-              <ListItemIcon className={classes.listItemIcon}><PlaylistAddCheckIcon /></ListItemIcon>
+              <ListItemIcon className={classes.listItemIcon}><TocIcon /></ListItemIcon>
               <ListItemText>
                 <Typography variant='button'>미처리 주문 내역</Typography>
               </ListItemText>
@@ -400,7 +403,7 @@ class App extends React.Component<any, any> {
         <List className={classes.list}>
           <Link to='/manage/setmenu' className={classes.link}>
             <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/setmenu'}>
-              <ListItemIcon className={classes.listItemIcon}><SettingsApplicationsIcon /></ListItemIcon>
+              <ListItemIcon className={classes.listItemIcon}><SettingsOutlinedIcon /></ListItemIcon>
               <ListItemText>
                 <Typography variant='button'>세트메뉴 관리</Typography>
               </ListItemText>
@@ -422,7 +425,7 @@ class App extends React.Component<any, any> {
         <List className={classes.list}>
           <Link to='/manage/member' className={classes.link}>
             <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/member'}>
-              <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon /></ListItemIcon>
+              <ListItemIcon className={classes.listItemIcon}><PersonIcon /></ListItemIcon>
               <ListItemText>
                 <Typography variant='button'>멤버 관리</Typography>
               </ListItemText>
