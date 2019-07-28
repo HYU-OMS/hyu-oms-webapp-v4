@@ -27,7 +27,6 @@ import {
   PlaylistAdd as PlaylistAddIcon,
   Toc as TocIcon,
   FormatListNumbered as FormatListNumberedIcon,
-  DonutSmall as DonutSmallIcon,
   Settings as SettingsIcon,
   SettingsOutlined as SettingsOutlinedIcon,
   PeopleOutline as PeopleOutlineIcon,
@@ -45,7 +44,6 @@ import OrderRequest from './order/request';
 import OrderList from './order/list';
 import OrderUnverified from './order/unverified';
 import Queue from './queue';
-import Statistics from './statistics';
 import ManageMenu from './manage/menu';
 import ManageSetmenu from './manage/setmenu';
 import ManageGroup from './manage/group';
@@ -377,19 +375,6 @@ class App extends React.Component<any, any> {
         <Divider className={classes.divider} />
 
         <List className={classes.list}>
-          <Link to='/statistics' className={classes.link}>
-            <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/statistics'}>
-              <ListItemIcon className={classes.listItemIcon}><DonutSmallIcon /></ListItemIcon>
-              <ListItemText>
-                <Typography variant='button'>통계</Typography>
-              </ListItemText>
-            </ListItem>
-          </Link>
-        </List>
-
-        <Divider className={classes.divider} />
-
-        <List className={classes.list}>
           <Link to='/manage/menu' className={classes.link}>
             <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/menu'}>
               <ListItemIcon className={classes.listItemIcon}><SettingsIcon /></ListItemIcon>
@@ -458,8 +443,6 @@ class App extends React.Component<any, any> {
         <Route path='/order/unverified' component={OrderUnverified} />
 
         <Route path='/queue' component={Queue} />
-
-        <Route path='/statistics' component={Statistics} />
 
         <Route path='/manage/menu' component={ManageMenu} />
         <Route path='/manage/setmenu' component={ManageSetmenu} />
