@@ -9,9 +9,11 @@
 
 - 작성 언어를 Javascript 에서 Typescript 로 변경했습니다.
 
-- WebSocket 을 적극적으로 적용하여 실시간 업데이트 기능을 강화했습니다.
+- ~~WebSocket 을 적극적으로 적용하여 실시간 업데이트 기능을 강화했습니다.~~
 
-    - [socket.io](https://www.npmjs.com/package/socket.io) 대신에 [Native WebSocket Object](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) 를 사용합니다.
+    - ~~[socket.io](https://www.npmjs.com/package/socket.io) 대신에 [Native WebSocket Object](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) 를 사용합니다.~~
+    
+    - 사용 규모에 비해 효율성이 떨어진다고 생각하여 Polling 방식을 사용하기로 했습니다.
 
 
 ### Tested environment
