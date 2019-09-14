@@ -10,7 +10,7 @@ const initialState: ReduxAuthState = {
   api_url: ((): string => {
     if(process.env.NODE_ENV === 'development') {
       if(!Boolean(process.env.REACT_APP_API_URL)) {
-        return 'http://localhost:3000/api/v4';
+        return 'http://localhost:3000/api/v3';
       }
       else {
         return process.env.REACT_APP_API_URL as string;
@@ -18,7 +18,7 @@ const initialState: ReduxAuthState = {
     }
     else {
       if(!Boolean(process.env.REACT_APP_API_URL)) {
-        return 'https://hyu-oms.com/api/v4';
+        return 'https://hyu-oms.com/api/v3';
       }
       else {
         return process.env.REACT_APP_API_URL as string;
