@@ -16,8 +16,8 @@ const signOut = (): any => {
   return {type: SIGN_OUT};
 };
 
-const selectGroup = (group_id: string, role: number): any => {
-  localStorage.setItem('group_id', group_id);
+const selectGroup = (group_id: number, role: number): any => {
+  localStorage.setItem('group_id', group_id.toString(10));
   localStorage.setItem('role', role.toString(10));
 
   return {type: SELECT_GROUP, group_id: group_id, role: role};
