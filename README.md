@@ -2,6 +2,9 @@
 
 이 Repository 는 React Web Application 코드만 포함합니다.
 
+#### 2019. 09. 14 추가
+API 서버로 [HYU OMS API version 3](https://github.com/HYU-OMS/hyu-oms-api-v3) 을 사용합니다.
+
 
 ### What is changed?
 
