@@ -273,16 +273,6 @@ class App extends React.Component<any, any> {
             HYU-OMS
           </Typography>
 
-          <IconButton color='default'>
-            <Badge badgeContent={4} color='secondary'>
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-
-          <IconButton color='default'>
-            <NotificationsNoneIcon />
-          </IconButton>
-
           {Boolean(this.props.jwt) &&
           <Button onClick={this.handleSignoutButtonClick} color='default'>로그아웃</Button>
           }
@@ -409,7 +399,6 @@ class App extends React.Component<any, any> {
                 </Link>
               </List>
 
-              {this.props.role > 2 &&
               <List className={classes.list}>
                 <Link to='/manage/group' className={classes.link}>
                   <ListItem className={classes.listItem} button
@@ -421,7 +410,6 @@ class App extends React.Component<any, any> {
                   </ListItem>
                 </Link>
               </List>
-              }
 
               <List className={classes.list}>
                 <Link to='/manage/member' className={classes.link}>
