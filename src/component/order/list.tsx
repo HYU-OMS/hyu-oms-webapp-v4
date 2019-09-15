@@ -65,8 +65,7 @@ class OrderList extends React.Component<any, any> {
         const response = await axios.get(url, {"headers": headers});
         this.setState({
           "list": response.data.list,
-          "pagination": response.data.pagination,
-          "is_list_loading": false
+          "pagination": response.data.pagination
         });
       } catch(err) {
         if(err.response !== undefined) {
