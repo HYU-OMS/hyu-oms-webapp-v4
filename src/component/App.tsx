@@ -13,8 +13,7 @@ import {
   List, ListItem, ListItemIcon, ListItemText,
   Divider,
   Hidden,
-  Dialog, DialogTitle, DialogContent,
-  Badge
+  Dialog, DialogTitle, DialogContent
 } from '@material-ui/core';
 
 /* To use Typescript types */
@@ -31,8 +30,6 @@ import {
   SettingsOutlined as SettingsOutlinedIcon,
   PeopleOutline as PeopleOutlineIcon,
   Person as PersonIcon,
-  Notifications as NotificationsIcon,
-  NotificationsNone as NotificationsNoneIcon,
   ReceiptOutlined as ReceiptOutlinedIcon
 } from '@material-ui/icons';
 
@@ -159,8 +156,7 @@ class App extends React.Component<any, any> {
 
     this.state = {
       is_drawer_open: (window.innerWidth >= 600),
-      is_authenticate_dialog_open: false,
-      is_authenticate_in_progress: false
+      is_authenticate_dialog_open: false
     };
   }
 
@@ -192,32 +188,31 @@ class App extends React.Component<any, any> {
       if(response.status === 'connected') {
         const access_token = response['authResponse']['accessToken'];
 
-        this.setState({
-          is_authenticate_in_progress: true
-        });
-
-        const url = this.props.api_url + '/v4/user';
+        const url = this.props.api_url + '/user';
         const content = {
           type: 'facebook',
           access_token: access_token
         };
 
-        axios.post(url, content)
-          .then((response: any) => {
+        (async () => {
+          try {
+            const response = await axios.post(url, content);
+
             this.props.signIn(response.data.jwt);
             this.setState({
-              is_authenticate_in_progress: false,
               is_authenticate_dialog_open: false
             });
 
             this.props.history.push('/group');
-          })
-          .catch((error: any) => {
-            alert(error.response.data.message);
-            this.setState({
-              is_authenticate_in_progress: false
-            });
-          });
+          } catch(err) {
+            if(err.response !== undefined) {
+              alert(err.response.data.message);
+            }
+            else {
+              alert("서버와의 연결에 문제가 있습니다.");
+            }
+          }
+        })();
       }
     });
   };
@@ -227,32 +222,31 @@ class App extends React.Component<any, any> {
       success: (authObj: any) => {
         const access_token = authObj['access_token'];
 
-        this.setState({
-          is_authenticate_in_progress: true
-        });
-
-        const url = this.props.api_url + '/v4/user';
+        const url = this.props.api_url + '/user';
         const content = {
           type: 'kakao',
           access_token: access_token
         };
 
-        axios.post(url, content)
-          .then((response: any) => {
+        (async () => {
+          try {
+            const response = await axios.post(url, content);
+
             this.props.signIn(response.data.jwt);
             this.setState({
-              is_authenticate_in_progress: false,
               is_authenticate_dialog_open: false
             });
 
             this.props.history.push('/group');
-          })
-          .catch((error: any) => {
-            alert(error.response.data.message);
-            this.setState({
-              is_authenticate_in_progress: false
-            });
-          });
+          } catch(err) {
+            if(err.response !== undefined) {
+              alert(err.response.data.message);
+            }
+            else {
+              alert("서버와의 연결에 문제가 있습니다.");
+            }
+          }
+        })();
       },
       fail: (err: any) => {
         console.log(err);
