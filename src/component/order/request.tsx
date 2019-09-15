@@ -302,6 +302,7 @@ class OrderRequest extends React.Component<any, any> {
             {menuItems}
           </List>
 
+          {this.state.setmenu_list.length > 0 &&
           <List
             dense
             subheader={
@@ -312,6 +313,7 @@ class OrderRequest extends React.Component<any, any> {
           >
             {setmenuItems}
           </List>
+          }
 
           <form onSubmit={this.handleOnSubmit} autoComplete="off">
             <TextField
