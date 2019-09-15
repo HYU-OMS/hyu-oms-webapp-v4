@@ -315,6 +315,7 @@ class Setmenu extends React.Component<any, any> {
       </Dialog>
     );
 
+    /* TODO: 메뉴 정보 보여주기 제대로 작성 */
     const setmenus = this.state.setmenu_list.map((item: any) =>
       <ListItem key={item.id}>
         <ListItemIcon>
@@ -322,7 +323,7 @@ class Setmenu extends React.Component<any, any> {
         </ListItemIcon>
         <ListItemText primary={item.name} secondary={item.price} />
         <ListItemSecondaryAction>
-          <IconButton edge="end">
+          <IconButton onClick={() => alert(JSON.stringify(item.menu_list))} edge="end">
             <InfoIcon />
           </IconButton>
           <IconButton onClick={() => this.editButtonClick(item)} edge="end">
