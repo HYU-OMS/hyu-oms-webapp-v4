@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT, SELECT_GROUP } from '../action/auth';
+import { SIGN_IN, SIGN_OUT, SELECT_GROUP, POST_ACTION_FOR_DELETE_GROUP } from '../action/auth';
 
 /* To use Typescript types */
 import { ReduxAuthState } from '../custom-types';
@@ -45,6 +45,12 @@ const auth: any = (state: ReduxAuthState = initialState, action: any) => {
       return {...state,
         group_id: action.group_id,
         role: action.role
+      };
+
+    case POST_ACTION_FOR_DELETE_GROUP:
+      return {...state,
+        group_id: null,
+        role: null
       };
 
     default:

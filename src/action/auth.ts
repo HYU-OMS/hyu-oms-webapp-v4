@@ -1,6 +1,7 @@
 const SIGN_IN: string = 'SIGN_IN';
 const SIGN_OUT: string = 'SIGN_OUT';
 const SELECT_GROUP: string = 'SELECT_GROUP';
+const POST_ACTION_FOR_DELETE_GROUP: string = 'POST_ACTION_FOR_DELETE_GROUP';
 
 const signIn = (jwt: string): any => {
   localStorage.setItem('jwt', jwt);
@@ -23,11 +24,20 @@ const selectGroup = (group_id: number, role: number): any => {
   return {type: SELECT_GROUP, group_id: group_id, role: role};
 };
 
+const postActionForDeleteGroup = (): any => {
+  localStorage.removeItem('group_id');
+  localStorage.removeItem('role');
+
+  return {type: POST_ACTION_FOR_DELETE_GROUP};
+};
+
 export {
   SIGN_IN,
   SIGN_OUT,
   SELECT_GROUP,
+  POST_ACTION_FOR_DELETE_GROUP,
   signIn,
   signOut,
-  selectGroup
+  selectGroup,
+  postActionForDeleteGroup
 }
