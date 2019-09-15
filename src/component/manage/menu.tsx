@@ -233,7 +233,7 @@ class Menu extends React.Component<any, any> {
       </ListItem>
     );
 
-    const memberUpdateDialog: any = (
+    const menuUpdateDialog: any = (
       <Dialog
         open={this.state.is_edit_dialog_opened}
         onClose={() => { this.setState({is_edit_dialog_opened: false}) }}
@@ -328,7 +328,7 @@ class Menu extends React.Component<any, any> {
           </form>
         </Paper>
 
-        {memberUpdateDialog}
+        {menuUpdateDialog}
       </Container>
     );
   }
