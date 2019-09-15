@@ -75,6 +75,10 @@ class OrderRequest extends React.Component<any, any> {
         const response: any = await axios.get(url, {"headers": headers});
 
         const menus = response.data;
+        for(const menu of menus) {
+          menu.amount = 0;
+        }
+
         this.setState({
           "menu_list": menus
         });
@@ -115,8 +119,14 @@ class OrderRequest extends React.Component<any, any> {
     (async () => {
       try {
         const response: any = await axios.get(url, {"headers": headers});
+
+        const setmenus = response.data;
+        for(const setmenu of setmenus) {
+          setmenu.amount = 0;
+        }
+
         this.setState({
-          "setmenu_list": response.data
+          "setmenu_list": setmenus
         });
       } catch(err) {
         if(err.response !== undefined) {
@@ -228,7 +238,6 @@ class OrderRequest extends React.Component<any, any> {
       })();
     }
   };
-
 
   render() {
     const { classes } = this.props;
