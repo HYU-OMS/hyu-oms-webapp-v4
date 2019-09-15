@@ -410,30 +410,29 @@ class App extends React.Component<any, any> {
               </List>
 
               {this.props.role > 2 &&
-              <React.Fragment>
-                <List className={classes.list}>
-                  <Link to='/manage/group' className={classes.link}>
-                    <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/group'}>
-                      <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon /></ListItemIcon>
-                      <ListItemText>
-                        <Typography variant='button'>그룹 관리</Typography>
-                      </ListItemText>
-                    </ListItem>
-                  </Link>
-                </List>
-
-                <List className={classes.list}>
-                  <Link to='/manage/member' className={classes.link}>
-                    <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/member'}>
-                      <ListItemIcon className={classes.listItemIcon}><PersonIcon /></ListItemIcon>
-                      <ListItemText>
-                        <Typography variant='button'>멤버 관리</Typography>
-                      </ListItemText>
-                    </ListItem>
-                  </Link>
-                </List>
-              </React.Fragment>
+              <List className={classes.list}>
+                <Link to='/manage/group' className={classes.link}>
+                  <ListItem className={classes.listItem} button
+                            selected={this.props.location.pathname === '/manage/group'}>
+                    <ListItemIcon className={classes.listItemIcon}><PeopleOutlineIcon/></ListItemIcon>
+                    <ListItemText>
+                      <Typography variant='button'>그룹 관리</Typography>
+                    </ListItemText>
+                  </ListItem>
+                </Link>
+              </List>
               }
+
+              <List className={classes.list}>
+                <Link to='/manage/member' className={classes.link}>
+                  <ListItem className={classes.listItem} button selected={this.props.location.pathname === '/manage/member'}>
+                    <ListItemIcon className={classes.listItemIcon}><PersonIcon /></ListItemIcon>
+                    <ListItemText>
+                      <Typography variant='button'>멤버 관리</Typography>
+                    </ListItemText>
+                  </ListItem>
+                </Link>
+              </List>
 
               <Divider className={classes.divider} />
             </React.Fragment>
