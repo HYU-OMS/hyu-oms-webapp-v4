@@ -223,7 +223,6 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-
 const styleAddedApp = withStyles(styles, { withTheme: true })(OrderList);
 const reduxStateAddedApp: any = connect(mapStateToProps)(styleAddedApp);
 const routerAddedApp: any = withRouter(reduxStateAddedApp);
