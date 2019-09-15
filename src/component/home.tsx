@@ -19,12 +19,15 @@ class Home extends React.Component {
         </Typography>
 
         <p>
-          현재 HYU-OMS Version 4 의 개발이 진행 중입니다. <br/>
           문의: <a href='mailto:khhan1993@gmail.com'>khhan1993@gmail.com</a>
+        </p>
+        <p>
+          FrontEnd: <a href='https://github.com/HYU-OMS/hyu-oms-webapp-v4'>https://github.com/HYU-OMS/hyu-oms-webapp-v4</a><br/>
+          BackEnd: <a href='https://github.com/HYU-OMS/hyu-oms-api-v3'>https://github.com/HYU-OMS/hyu-oms-api-v3</a>
         </p>
 
         <p>
-          <strong>현재 로그인 불가능합니다.</strong>
+          <strong>2019년 9월 16일 업데이트: 현재 시스템의 사용이 가능합니다.</strong>
         </p>
       </div>
     );
