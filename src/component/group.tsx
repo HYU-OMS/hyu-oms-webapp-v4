@@ -16,7 +16,8 @@ import {
   HowToReg as HowToRegIcon,
   PersonAddOutlined as PersonAddIcon,
   PersonAddDisabledOutlined as PersonAddDisabledIcon,
-  SupervisedUserCircle as AdminIcon
+  SupervisedUserCircle as AdminIcon,
+  Star as StarIcon
 } from '@material-ui/icons';
 import { withStyles, Theme } from '@material-ui/core/styles';
 
@@ -193,7 +194,7 @@ class Group extends React.Component<any, any> {
         button
         onClick={() => this.clickRegisteredGroupButton(item)}
         selected={parseInt(this.props.group_id) === parseInt(item.id)}
-        disabled={parseInt(item.role, 10) === 0}
+        disabled={parseInt(item.role, 10) < 1}
         key={item.id}
       >
         <ListItemAvatar>
@@ -204,9 +205,10 @@ class Group extends React.Component<any, any> {
         <ListItemText primary={item.name} secondary={this.displayDate(item.created_at)} />
         <ListItemSecondaryAction>
           <IconButton edge="end" disabled={parseInt(item.role, 10) === 0}>
-            {parseInt(item.role, 10) === 0 && <PersonAddDisabledIcon />}
+            {parseInt(item.role, 10) < 1 && <PersonAddDisabledIcon />}
             {parseInt(item.role, 10) === 1 && <HowToRegIcon />}
             {parseInt(item.role, 10) === 2 && <AdminIcon />}
+            {parseInt(item.role, 10) === 3 && <StarIcon />}
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
