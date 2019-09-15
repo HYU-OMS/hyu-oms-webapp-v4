@@ -15,8 +15,8 @@ import {
 import {
   HowToReg as HowToRegIcon,
   PersonAddOutlined as PersonAddIcon,
-  PersonAddDisabledOutlined as PersonAddDisabledIcon,
-  SupervisedUserCircle as AdminIcon,
+  Block as BlockIcon,
+  VerifiedUser as AdminIcon,
   Star as StarIcon
 } from '@material-ui/icons';
 import { withStyles, Theme } from '@material-ui/core/styles';
@@ -205,7 +205,7 @@ class Group extends React.Component<any, any> {
         <ListItemText primary={item.name} secondary={this.displayDate(item.created_at)} />
         <ListItemSecondaryAction>
           <IconButton edge="end" disabled={parseInt(item.role, 10) === 0}>
-            {parseInt(item.role, 10) < 1 && <PersonAddDisabledIcon />}
+            {parseInt(item.role, 10) < 1 && <BlockIcon />}
             {parseInt(item.role, 10) === 1 && <HowToRegIcon />}
             {parseInt(item.role, 10) === 2 && <AdminIcon />}
             {parseInt(item.role, 10) === 3 && <StarIcon />}
@@ -259,19 +259,23 @@ class Group extends React.Component<any, any> {
 
           <Divider className={classes.divider} component='hr' variant='fullWidth' />
 
-          <Typography align='center' variant="h6">
-            가입 가능 그룹 목록
-          </Typography>
+          {!(this.state.list_ur.length === 0 && this.state.pagination_ur.length === 0) &&
+          <React.Fragment>
+            <Typography align='center' variant="h6">
+              가입 가능 그룹 목록
+            </Typography>
 
-          <List dense>
-            {unregistered_group}
-          </List>
+            <List dense>
+              {unregistered_group}
+            </List>
 
-          <ButtonGroup fullWidth color='default'>
-            {unregistered_pagination}
-          </ButtonGroup>
+            <ButtonGroup fullWidth color='default'>
+              {unregistered_pagination}
+            </ButtonGroup>
 
-          <Divider className={classes.divider} component='hr' variant='fullWidth' />
+            <Divider className={classes.divider} component='hr' variant='fullWidth' />
+          </React.Fragment>
+          }
 
           <Typography align='center' variant="h6">
             새 그룹 생성
