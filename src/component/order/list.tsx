@@ -8,7 +8,8 @@ import {
   List, ListItem, ListItemAvatar, ListItemText,
   Avatar,
   Button, ButtonGroup,
-  Chip
+  Chip,
+  LinearProgress
 } from '@material-ui/core';
 import {
   Check as CheckIcon,
@@ -36,6 +37,9 @@ const styles: any = (theme: Theme) => ({
   },
   rejectedOrder: {
     backgroundColor: '#F50057'
+  },
+  paper: {
+    boxShadow: 'none'
   }
 });
 
@@ -46,12 +50,33 @@ class OrderList extends React.Component<any, any> {
     this.state = {
       "list": [],
       "pagination": [],
-      "cur_page": 1
+      "cur_page": 1,
+      "is_loading": true,
+      "setInterval": null,
+      "interval_sec": 10
     };
   }
 
   componentDidMount(): void {
     this.getOrderList();
+    this.setState({
+      "setInterval": setInterval(() => {
+        if(this.state.interval_sec === 0) {
+          this.getOrderList();
+        }
+
+        this.setState({
+          "interval_sec": this.state.interval_sec - 1
+        });
+      }, 1000)
+    });
+  }
+
+  componentWillUnmount(): void {
+    clearInterval(this.state.setInterval);
+    this.setState({
+      "setInterval": null
+    });
   }
 
   getOrderList = (page: number = this.state.cur_page): void => {
@@ -60,12 +85,18 @@ class OrderList extends React.Component<any, any> {
       "Authorization": "Bearer " + this.props.jwt
     };
 
+    this.setState({
+      "is_loading": true
+    });
+
     (async () => {
       try {
         const response = await axios.get(url, {"headers": headers});
         this.setState({
           "list": response.data.list,
-          "pagination": response.data.pagination
+          "pagination": response.data.pagination,
+          "is_loading": false,
+          "interval_sec": 10
         });
       } catch(err) {
         if(err.response !== undefined) {
@@ -196,18 +227,21 @@ class OrderList extends React.Component<any, any> {
 
     return (
       <Container className={classes.container} maxWidth='sm'>
-        <Paper className={classes.root}>
-          <Typography align='center' variant="h6">
-            전체 주문 내역
-          </Typography>
+        <Paper square className={classes.paper}>
+          <LinearProgress color={Boolean(this.state.is_loading) ? 'secondary' : 'primary'} />
+          <div className={classes.root}>
+            <Typography align='center' variant="h6">
+              전체 주문 내역
+            </Typography>
 
-          <List dense>
-            {order_list}
-          </List>
+            <List dense>
+              {order_list}
+            </List>
 
-          <ButtonGroup fullWidth color='default'>
-            {pagination}
-          </ButtonGroup>
+            <ButtonGroup fullWidth color='default'>
+              {pagination}
+            </ButtonGroup>
+          </div>
         </Paper>
       </Container>
     );
