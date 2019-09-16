@@ -8,7 +8,8 @@ import {
   List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction,
   Collapse,
   Avatar,
-  IconButton
+  IconButton,
+  LinearProgress
 } from '@material-ui/core';
 import {
   RemoveCircleOutlined as RemoveIcon,
@@ -35,8 +36,8 @@ const styles: any = (theme: Theme) => ({
   nested: {
     paddingLeft: theme.spacing(2.5)
   },
-  chip: {
-
+  paper: {
+    boxShadow: 'none'
   }
 });
 
@@ -45,12 +46,34 @@ class Queue extends React.Component<any, any> {
     super(props);
 
     this.state = {
-      "queue": []
+      "queue": [],
+      "expanded_chk": {},
+      "is_loading": true,
+      "setInterval": null,
+      "interval_sec": 10
     };
   }
 
   componentDidMount(): void {
     this.getQueue();
+    this.setState({
+      "setInterval": setInterval(() => {
+        if(this.state.interval_sec === 0) {
+          this.getQueue();
+        }
+
+        this.setState({
+          "interval_sec": this.state.interval_sec - 1
+        });
+      }, 1000)
+    });
+  }
+
+  componentWillUnmount(): void {
+    clearInterval(this.state.setInterval);
+    this.setState({
+      "setInterval": null
+    });
   }
 
   getQueue = (): void => {
@@ -59,18 +82,25 @@ class Queue extends React.Component<any, any> {
       "Authorization": "Bearer " + this.props.jwt
     };
 
+    this.setState({
+      "is_loading": true
+    });
+
     (async () => {
       try {
         const response = await axios.get(url, {"headers": headers});
 
-        // TODO: reload 시 자동으로 접히는 현상 방지
         const queue = response.data;
         for(const q of queue) {
-          q.is_expanded = false;
+          if(!(q.id in this.state.expanded_chk)) {
+            this.state.expanded_chk[q.id] = false;
+          }
         }
 
         this.setState({
-          "queue": queue
+          "queue": queue,
+          "is_loading": false,
+          "interval_sec": 10
         });
       } catch(err) {
         if(err.response !== undefined) {
@@ -118,8 +148,12 @@ class Queue extends React.Component<any, any> {
   };
 
   clickExpandIcon = (item: any) => {
-    item.is_expanded = !item.is_expanded;
-    this.forceUpdate();
+    const expanded_chk = this.state.expanded_chk;
+    expanded_chk[item.id] = !expanded_chk[item.id];
+
+    this.setState({
+      "expanded_chk": expanded_chk
+    });
   };
 
   removeItem = (q: any): void => {
@@ -180,11 +214,11 @@ class Queue extends React.Component<any, any> {
             <ListItemText primary={item.name} secondary={(item.queue.length).toString() + '건 대기중'}/>
             <ListItemSecondaryAction>
               <IconButton disabled={item.queue.length === 0} onClick={() => this.clickExpandIcon(item)}>
-                {item.is_expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {Boolean(this.state.expanded_chk[item.id]) ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
-          <Collapse in={item.is_expanded} timeout="auto" unmountOnExit>
+          <Collapse in={Boolean(this.state.expanded_chk[item.id])} timeout="auto" unmountOnExit>
             <List dense disablePadding>
               {queueItems}
             </List>
@@ -195,14 +229,17 @@ class Queue extends React.Component<any, any> {
 
     return (
       <Container className={classes.container} maxWidth='sm'>
-        <Paper className={classes.root}>
-          <Typography align='center' variant="h6">
-            메뉴별 대기열
-          </Typography>
+        <Paper square className={classes.paper}>
+          <LinearProgress color={Boolean(this.state.is_loading) ? 'secondary' : 'primary'} />
+          <div className={classes.root}>
+            <Typography align='center' variant="h6">
+              메뉴별 대기열
+            </Typography>
 
-          <List dense disablePadding>
-            {menus}
-          </List>
+            <List dense disablePadding>
+              {menus}
+            </List>
+          </div>
         </Paper>
       </Container>
     );
