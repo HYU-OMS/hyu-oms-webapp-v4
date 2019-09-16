@@ -9,7 +9,8 @@ import {
   List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, ListSubheader,
   Avatar,
   Button, IconButton,
-  TextField
+  TextField,
+  LinearProgress
 } from '@material-ui/core';
 import {
   AddCircleOutlined as AddIcon,
@@ -44,6 +45,9 @@ const styles: any = (theme: Theme) => ({
   listItem: {
     paddingLeft: theme.spacing(0.5),
     paddingRight: theme.spacing(0.5)
+  },
+  paper: {
+    boxShadow: 'none'
   }
 });
 
@@ -54,33 +58,149 @@ class OrderRequest extends React.Component<any, any> {
     this.state = {
       "menu_list": [],
       "setmenu_list": [],
+      "prev_status": null,
       "table_name": "",
-      "total_price": 0
+      "total_price": 0,
+      "is_loading": true,
+      "setInterval": null,
+      "interval_sec": 10
     };
   }
 
   componentDidMount(): void {
-    this.getMenuList();
-    this.getSetmenuList();
+    this.getMenuAndSetmenuList();
+    this.setState({
+      "setInterval": setInterval(() => {
+        if(this.state.interval_sec === 0) {
+          this.getMenuAndSetmenuList();
+        }
+
+        this.setState({
+          "interval_sec": this.state.interval_sec - 1
+        });
+      }, 1000)
+    });
   }
 
-  getMenuList = () => {
-    const url = this.props.api_url + "/menu?group_id=" + (this.props.group_id).toString();
+  componentWillUnmount(): void {
+    clearInterval(this.state.setInterval);
+    this.setState({
+      "setInterval": null
+    });
+  }
+
+  getMenuAndSetmenuList = () => {
+    const url_menu = this.props.api_url + "/menu?group_id=" + (this.props.group_id).toString();
+    const url_setmenu = this.props.api_url + "/setmenu?group_id=" + (this.props.group_id).toString();
+
     const headers = {
       "Authorization": "Bearer " + this.props.jwt
     };
 
+    this.setState({
+      "is_loading": true
+    });
+
     (async () => {
       try {
-        const response: any = await axios.get(url, {"headers": headers});
-
-        const menus = response.data;
+        const response_menu: any = await axios.get(url_menu, {"headers": headers});
+        const menus = response_menu.data;
         for(const menu of menus) {
           menu.amount = 0;
         }
 
+        const response_setmenu: any = await axios.get(url_setmenu, {"headers": headers});
+        const setmenus = response_setmenu.data;
+        for(const setmenu of setmenus) {
+          setmenu.amount = 0;
+        }
+
+        if(this.state.prev_status === null) {
+          const menu_status: any = {};
+          for(const menu of menus) {
+            menu_status[menu.id] = {"is_enabled": menu.is_enabled, "price": menu.price};
+          }
+
+          const setmenu_status: any = {};
+          for(const setmenu of setmenus) {
+            setmenu_status[setmenu.id] = {"is_enabled": setmenu.is_enabled, "price": setmenu.price};
+          }
+
+          this.setState({
+            "prev_status": {
+              "menu": menu_status,
+              "setmenu": setmenu_status
+            },
+            "menu_list": menus,
+            "setmenu_list": setmenus
+          });
+        }
+        else {
+          let is_changed: boolean = false;
+
+          const menu_status: any = {};
+          for(const menu of menus) {
+            menu_status[menu.id] = {"is_enabled": menu.is_enabled, "price": menu.price};
+          }
+
+          const setmenu_status: any = {};
+          for(const setmenu of setmenus) {
+            setmenu_status[setmenu.id] = {"is_enabled": setmenu.is_enabled, "price": setmenu.price};
+          }
+
+          if(Object.keys(menu_status).length !== Object.keys(this.state.prev_status.menu).length) {
+            is_changed = true;
+          }
+          else {
+            const menu_ids = Object.keys(menu_status);
+            for(const menu_id of menu_ids) {
+              if(menu_status[menu_id].is_enabled !== this.state.prev_status.menu[menu_id].is_enabled) {
+                is_changed = true;
+                break;
+              }
+
+              if(menu_status[menu_id].price !== this.state.prev_status.menu[menu_id].price) {
+                is_changed = true;
+                break;
+              }
+            }
+          }
+
+          if(Object.keys(setmenu_status).length !== Object.keys(this.state.prev_status.setmenu).length) {
+            is_changed = true;
+          }
+          else {
+            const setmenu_ids = Object.keys(setmenu_status);
+            for(const setmenu_id of setmenu_ids) {
+              if(setmenu_status[setmenu_id].is_enabled !== this.state.prev_status.setmenu[setmenu_id].is_enabled) {
+                is_changed = true;
+                break;
+              }
+
+              if(setmenu_status[setmenu_id].price !== this.state.prev_status.setmenu[setmenu_id].price) {
+                is_changed = true;
+                break;
+              }
+            }
+          }
+
+          if(is_changed) {
+            alert("메뉴/세트메뉴 에 변동사항이 있습니다!");
+            
+            this.setState({
+              "prev_status": {
+                "menu": menu_status,
+                "setmenu": setmenu_status
+              },
+              "menu_list": menus,
+              "setmenu_list": setmenus
+            });
+          }
+        }
+
         this.setState({
-          "menu_list": menus
+          "is_loading": false,
+          "interval_sec": 10
         });
       } catch(err) {
         if(err.response !== undefined) {
@@ -108,35 +228,6 @@ class OrderRequest extends React.Component<any, any> {
       "menu_list": this.state.menu_list,
       "total_price": this.state.total_price + (value * menuItem.price)
     });
-  };
-
-  getSetmenuList = () => {
-    const url = this.props.api_url + "/setmenu?group_id=" + (this.props.group_id).toString();
-    const headers = {
-      "Authorization": "Bearer " + this.props.jwt
-    };
-
-    (async () => {
-      try {
-        const response: any = await axios.get(url, {"headers": headers});
-
-        const setmenus = response.data;
-        for(const setmenu of setmenus) {
-          setmenu.amount = 0;
-        }
-
-        this.setState({
-          "setmenu_list": setmenus
-        });
-      } catch(err) {
-        if(err.response !== undefined) {
-          alert(err.response.data.message);
-        }
-        else {
-          alert("서버와의 연결에 문제가 있습니다.");
-        }
-      }
-    })();
   };
 
   handleSetmenuItemAdjust = (setmenuItem: any, value: number): void => {
@@ -286,69 +377,72 @@ class OrderRequest extends React.Component<any, any> {
 
     return (
       <Container className={classes.container} maxWidth='sm'>
-        <Paper className={classes.root}>
-          <Typography align='center' variant="h6">
-            주문 입력
-          </Typography>
+        <Paper square className={classes.paper}>
+          <LinearProgress color={Boolean(this.state.is_loading) ? 'secondary' : 'primary'} />
+          <div className={classes.root}>
+            <Typography align='center' variant="h6">
+              주문 입력
+            </Typography>
 
-          <List
-            dense
-            subheader={
-              <ListSubheader className={classes.listSubHeader} component="div">
-                메뉴 목록
-              </ListSubheader>
-            }
-          >
-            {menuItems}
-          </List>
-
-          {this.state.setmenu_list.length > 0 &&
-          <List
-            dense
-            subheader={
-              <ListSubheader className={classes.listSubHeader} component="div">
-                세트메뉴 목록
-              </ListSubheader>
-            }
-          >
-            {setmenuItems}
-          </List>
-          }
-
-          <form onSubmit={this.handleOnSubmit} autoComplete="off">
-            <TextField
-              required
-              fullWidth
-              label="가져다 줄 위치를 입력해 주세요"
-              margin="dense"
-              variant='outlined'
-              value={this.state.table_name}
-              onChange={this.handleTableNameChange}
-            />
-
-            <Divider className={classes.divider} component='hr' variant='fullWidth' />
-
-            <Button
-              fullWidth
-              size='medium'
-              variant="outlined"
-              color="inherit"
-              className={classes.button}
+            <List
+              dense
+              subheader={
+                <ListSubheader className={classes.listSubHeader} component="div">
+                  메뉴 목록
+                </ListSubheader>
+              }
             >
-              총 금액 : {this.state.total_price}
-            </Button>
+              {menuItems}
+            </List>
 
-            <Button
-              fullWidth
-              type="submit"
-              size='medium'
-              variant="contained"
-              color="primary"
-              className={classes.button}
+            {this.state.setmenu_list.length > 0 &&
+            <List
+              dense
+              subheader={
+                <ListSubheader className={classes.listSubHeader} component="div">
+                  세트메뉴 목록
+                </ListSubheader>
+              }
             >
-              주문 생성
-            </Button>
-          </form>
+              {setmenuItems}
+            </List>
+            }
+
+            <form onSubmit={this.handleOnSubmit} autoComplete="off">
+              <TextField
+                required
+                fullWidth
+                label="가져다 줄 위치를 입력해 주세요"
+                margin="dense"
+                variant='outlined'
+                value={this.state.table_name}
+                onChange={this.handleTableNameChange}
+              />
+
+              <Divider className={classes.divider} component='hr' variant='fullWidth' />
+
+              <Button
+                fullWidth
+                size='medium'
+                variant="outlined"
+                color="inherit"
+                className={classes.button}
+              >
+                총 금액 : {this.state.total_price}
+              </Button>
+
+              <Button
+                fullWidth
+                type="submit"
+                size='medium'
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                주문 생성
+              </Button>
+            </form>
+          </div>
         </Paper>
       </Container>
     );
