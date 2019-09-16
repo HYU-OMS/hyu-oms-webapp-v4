@@ -357,7 +357,7 @@ class OrderRequest extends React.Component<any, any> {
     );
 
     const setmenuItems = this.state.setmenu_list.map((item: any) =>
-      <ListItem key={item.id} className={classes.listItem}>
+      <ListItem key={item.id} className={classes.listItem} disabled={!Boolean(item.is_enabled)}>
         <ListItemAvatar>
           <Avatar>
             {item.amount}
@@ -365,12 +365,16 @@ class OrderRequest extends React.Component<any, any> {
         </ListItemAvatar>
         <ListItemText primary={item.name} secondary={item.price} />
         <ListItemSecondaryAction>
-          <IconButton onClick={(e) => this.handleSetmenuItemAdjust(item, 1)} edge="end">
-            <AddIcon/>
-          </IconButton>
-          <IconButton onClick={(e) => this.handleSetmenuItemAdjust(item, -1)} edge="end">
-            <RemoveIcon/>
-          </IconButton>
+          {Boolean(item.is_enabled) &&
+          <React.Fragment>
+            <IconButton onClick={(e) => this.handleSetmenuItemAdjust(item, 1)} edge="end">
+              <AddIcon/>
+            </IconButton>
+            <IconButton onClick={(e) => this.handleSetmenuItemAdjust(item, -1)} edge="end">
+              <RemoveIcon/>
+            </IconButton>
+          </React.Fragment>
+          }
         </ListItemSecondaryAction>
       </ListItem>
     );
