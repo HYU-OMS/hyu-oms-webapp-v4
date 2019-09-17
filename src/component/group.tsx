@@ -202,7 +202,7 @@ class Group extends React.Component<any, any> {
             {this.displayListHeadCharacter(item.name)}
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={item.name} secondary={this.displayDate(item.created_at)} />
+        <ListItemText primary={'#' + item.id + ' | ' + item.name} secondary={this.displayDate(item.created_at)} />
         <ListItemSecondaryAction>
           <IconButton edge="end" disabled={parseInt(item.role, 10) === 0}>
             {parseInt(item.role, 10) < 1 && <BlockIcon />}
@@ -229,7 +229,7 @@ class Group extends React.Component<any, any> {
             {this.displayListHeadCharacter(item.name)}
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={item.name} secondary={this.displayDate(item.created_at)} />
+        <ListItemText primary={'#' + item.id + ' | ' + item.name} secondary={this.displayDate(item.created_at)} />
         <ListItemSecondaryAction>
           <IconButton edge="end">
             <PersonAddIcon/>

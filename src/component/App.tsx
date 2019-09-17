@@ -267,6 +267,10 @@ class App extends React.Component<any, any> {
             HYU-OMS
           </Typography>
 
+          {Boolean(this.props.jwt) && Boolean(this.props.group_id) &&
+          <Button disabled color='default'>그룹 ID: {this.props.group_id}</Button>
+          }
+
           {Boolean(this.props.jwt) &&
           <Button onClick={this.handleSignoutButtonClick} color='default'>로그아웃</Button>
           }
