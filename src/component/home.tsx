@@ -25,10 +25,6 @@ class Home extends React.Component {
           FrontEnd: <a href='https://github.com/HYU-OMS/hyu-oms-webapp-v4'>https://github.com/HYU-OMS/hyu-oms-webapp-v4</a><br/>
           BackEnd: <a href='https://github.com/HYU-OMS/hyu-oms-api-v3'>https://github.com/HYU-OMS/hyu-oms-api-v3</a>
         </p>
-
-        <p>
-          <strong>2019년 9월 16일 업데이트: 현재 시스템의 사용이 가능합니다.</strong>
-        </p>
       </div>
     );
   }
