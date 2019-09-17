@@ -1,31 +1,64 @@
 import React from 'react';
 import { withStyles, Theme } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import {
+  Typography,
+  Container, Paper,
+  List, ListItem, ListItemIcon, ListItemText,
+  Icon
+} from '@material-ui/core';
+import {
+  Email as EmailIcon
+} from '@material-ui/icons';
 
 const styles: any = (theme: Theme) => ({
+  container: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    padding: theme.spacing(2, 2),
     overflowX: 'auto'
+  },
+  icon: {
+    width: '30px'
   }
 });
 
-class Home extends React.Component {
+class Home extends React.Component<any, any> {
   render() {
-    return (
-      <div>
-        <Typography variant="h6">
-          HYU-OMS (한양대학교 주문관리시스템)
-        </Typography>
+    const { classes } = this.props;
 
-        <p>
-          문의: <a href='mailto:khhan1993@gmail.com'>khhan1993@gmail.com</a>
-        </p>
-        <p>
-          FrontEnd: <a href='https://github.com/HYU-OMS/hyu-oms-webapp-v4'>https://github.com/HYU-OMS/hyu-oms-webapp-v4</a><br/>
-          BackEnd: <a href='https://github.com/HYU-OMS/hyu-oms-api-v3'>https://github.com/HYU-OMS/hyu-oms-api-v3</a>
-        </p>
-      </div>
+    return (
+      <Container className={classes.container} maxWidth='sm'>
+        <Paper className={classes.root}>
+          <Typography align='center' variant="h6">
+            HYU-OMS
+          </Typography>
+
+          <List component="nav">
+            <ListItem>
+              <ListItemIcon>
+                <EmailIcon />
+              </ListItemIcon>
+              <ListItemText primary="Contact Email" secondary="khhan1993@gmail.com" />
+            </ListItem>
+
+            <ListItem
+              button
+              onClick={() => {
+                alert("This system uses WebApp Version 4, API Version 3.");
+                document.location.href = 'https://github.com/HYU-OMS';
+              }}
+            >
+              <ListItemIcon>
+                <Icon className='fab fa-github' />
+              </ListItemIcon>
+              <ListItemText primary="GitHub Repository" secondary="Click here to see repository." />
+            </ListItem>
+          </List>
+        </Paper>
+      </Container>
     );
   }
 }
