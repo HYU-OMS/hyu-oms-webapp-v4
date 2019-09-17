@@ -129,7 +129,7 @@ class Queue extends React.Component<any, any> {
     const month = (dateObj.getMonth() + 1).toString();
     const date = (dateObj.getDate()).toString();
 
-    let hour = (dateObj.getHours() + 1).toString();
+    let hour = (dateObj.getHours()).toString();
     if(hour.length === 1) {
       hour = "0" + hour;
     }
