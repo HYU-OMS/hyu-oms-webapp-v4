@@ -15,6 +15,9 @@ loadCSS('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=
 /* Font Awesome */
 loadCSS('https://use.fontawesome.com/releases/v5.9.0/css/all.css');
 
+/* XEIcon - for Kakao Icon */
+loadCSS('https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css');
+
 const store = createStore(reducer);
 
 ReactDOM.render(
