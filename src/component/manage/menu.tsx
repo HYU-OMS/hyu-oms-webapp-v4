@@ -123,7 +123,8 @@ class Menu extends React.Component<any, any> {
           "is_enabled": parseInt(this.state.edit_targeted_item.is_enabled, 10)
         }, {"headers": headers});
 
-        this.state.edit_targeted_item.price = this.state.edit_price_value;
+        //this.state.edit_targeted_item.price = this.state.edit_price_value;
+        this.getMenuList();
         this.setState({
           "is_edit_dialog_opened": false,
           "edit_targeted_item": null,
@@ -153,8 +154,9 @@ class Menu extends React.Component<any, any> {
           "is_enabled": parseInt(item.is_enabled, 10) === 1 ? 0 : 1
         }, {"headers": headers});
 
-        item.is_enabled = !item.is_enabled;
-        this.forceUpdate();
+        //item.is_enabled = (parseInt(item.is_enabled, 10) === 1 ? 0 : 1);
+        //this.forceUpdate();
+        this.getMenuList();
       } catch(err) {
         if(err.response !== undefined) {
           alert(err.response.data.message);
