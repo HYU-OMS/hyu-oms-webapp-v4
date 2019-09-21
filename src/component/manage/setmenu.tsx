@@ -9,7 +9,8 @@ import {
   List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction,
   Button, IconButton,
   TextField,
-  Switch, ListSubheader, ListItemAvatar, Avatar, Dialog, DialogTitle, DialogContent
+  Switch, ListSubheader, ListItemAvatar, Avatar, Dialog, DialogTitle, DialogContent,
+  Tooltip
 } from '@material-ui/core';
 import {
   Label as LabelIcon,
@@ -326,10 +327,10 @@ class Setmenu extends React.Component<any, any> {
         <ListItemText primary={item.name} secondary={item.price} />
         <ListItemSecondaryAction>
           <IconButton onClick={() => alert(JSON.stringify(item.menu_list))} edge="end">
-            <InfoIcon />
+            <Tooltip title='구성 정보 보기'><InfoIcon /></Tooltip>
           </IconButton>
           <IconButton onClick={() => this.editButtonClick(item)} edge="end">
-            <EditIcon />
+            <Tooltip title='가격 수정'><EditIcon /></Tooltip>
           </IconButton>
           <Switch
             edge="end"

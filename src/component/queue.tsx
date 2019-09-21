@@ -9,12 +9,13 @@ import {
   Collapse,
   Avatar,
   IconButton,
-  LinearProgress, Button, CircularProgress
+  LinearProgress, Button, CircularProgress,
+  Tooltip
 } from '@material-ui/core';
 import {
   RemoveCircleOutlined as RemoveIcon,
   ExpandLess as ExpandLessIcon,
-  ExpandMore as ExpandMoreIcon,
+  ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons';
 import { withStyles, Theme } from '@material-ui/core/styles';
 import axios from "axios";
@@ -201,9 +202,11 @@ class Queue extends React.Component<any, any> {
       const queueItems = item.queue.map((q: any) =>
         <ListItem key={q.order_id.toString() + '_' + q.menu_id.toString()} className={classes.nested}>
           <ListItemAvatar>
-            <Avatar>
-              {q.amount}
-            </Avatar>
+            <Tooltip title='대기중인 수량'>
+              <Avatar>
+                {q.amount}
+              </Avatar>
+            </Tooltip>
           </ListItemAvatar>
           <ListItemText primary={"To: " + q.table_id} secondary={'#' + q.order_id + ', ' + this.getDateString(q.created_at)} />
           <ListItemSecondaryAction>
@@ -218,9 +221,11 @@ class Queue extends React.Component<any, any> {
         <React.Fragment key={item.id}>
           <ListItem disabled={item.queue.length === 0} className={classes.listItem}>
             <ListItemAvatar>
-              <Avatar>
-                {this.getCount(item)}
-              </Avatar>
+              <Tooltip title='대기중인 수량'>
+                <Avatar>
+                  {this.getCount(item)}
+                </Avatar>
+              </Tooltip>
             </ListItemAvatar>
             <ListItemText primary={item.name} secondary={(item.queue.length).toString() + '건 대기중'}/>
             <ListItemSecondaryAction>

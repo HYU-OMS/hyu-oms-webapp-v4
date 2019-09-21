@@ -8,7 +8,8 @@ import {
   List, ListItem, ListItemText, ListItemSecondaryAction,
   Dialog, DialogTitle, DialogContent,
   IconButton, Fab,
-  ListItemAvatar, Avatar, Divider
+  ListItemAvatar, Avatar, Divider,
+  Tooltip
 } from '@material-ui/core';
 import {
   Star as StarIcon,
@@ -174,12 +175,12 @@ class Member extends React.Component<any, any> {
         <ListItemText primary={item.name} secondary={this.displayRoleString(item.role)} />
         <ListItemSecondaryAction>
           <IconButton color={this.displayIconColor(item.role)} edge="end">
-            {item.role === 3 && <StarIcon />}
-            {item.role === 2 && <VerifiedUserIcon />}
-            {item.role === 0 && <BlockIcon />}
+            {item.role === 3 && <Tooltip title='그룹 만든 사람'><StarIcon /></Tooltip>}
+            {item.role === 2 && <Tooltip title='관리자'><VerifiedUserIcon /></Tooltip>}
+            {item.role === 0 && <Tooltip title='미승인 멤버'><BlockIcon /></Tooltip>}
           </IconButton>
           <IconButton onClick={() => this.editMemberStatus(item)} disabled={item.role === 3} edge="end">
-            <EditIcon />
+            <Tooltip title='권한 수정'><EditIcon /></Tooltip>
           </IconButton>
           {/* TODO: 멤버 삭제 추가할 것 */}
           <IconButton disabled={true || item.role === 3} edge="end">
@@ -207,7 +208,7 @@ class Member extends React.Component<any, any> {
               className={classes.fab}
               color={this.state.update_target_member.role === 0 ? 'primary' : 'default'}
             >
-              <BlockIcon/>
+              <Tooltip title='미승인 멤버'><BlockIcon/></Tooltip>
             </Fab>
             <Fab
               size="small"
@@ -215,7 +216,7 @@ class Member extends React.Component<any, any> {
               className={classes.fab}
               color={this.state.update_target_member.role === 1 ? 'primary' : 'default'}
             >
-              <HowToRegIcon/>
+              <Tooltip title='일반 멤버'><HowToRegIcon/></Tooltip>
             </Fab>
             <Fab
               size="small"
@@ -223,7 +224,7 @@ class Member extends React.Component<any, any> {
               className={classes.fab}
               color={this.state.update_target_member.role === 2 ? 'primary' : 'default'}
             >
-              <VerifiedUserIcon/>
+              <Tooltip title='관리자'><VerifiedUserIcon/></Tooltip>
             </Fab>
           </DialogContent>
         </React.Fragment>

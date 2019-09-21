@@ -10,7 +10,8 @@ import {
   List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction,
   Avatar,
   Button, IconButton,
-  TextField, ButtonGroup
+  TextField, ButtonGroup,
+  Tooltip
 } from '@material-ui/core';
 import {
   HowToReg as HowToRegIcon,
@@ -205,10 +206,10 @@ class Group extends React.Component<any, any> {
         <ListItemText primary={'#' + item.id + ' | ' + item.name} secondary={this.displayDate(item.created_at)} />
         <ListItemSecondaryAction>
           <IconButton edge="end" disabled={parseInt(item.role, 10) === 0}>
-            {parseInt(item.role, 10) < 1 && <BlockIcon />}
-            {parseInt(item.role, 10) === 1 && <HowToRegIcon />}
-            {parseInt(item.role, 10) === 2 && <AdminIcon />}
-            {parseInt(item.role, 10) === 3 && <StarIcon />}
+            {parseInt(item.role, 10) < 1 && <Tooltip title='미승인 멤버'><BlockIcon /></Tooltip>}
+            {parseInt(item.role, 10) === 1 && <Tooltip title='일반 멤버'><HowToRegIcon /></Tooltip>}
+            {parseInt(item.role, 10) === 2 && <Tooltip title='관리자'><AdminIcon /></Tooltip>}
+            {parseInt(item.role, 10) === 3 && <Tooltip title='그룹 만든 사람'><StarIcon /></Tooltip>}
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
