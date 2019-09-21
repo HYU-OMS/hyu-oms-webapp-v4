@@ -10,7 +10,7 @@ import {
   Avatar,
   Button, IconButton,
   TextField,
-  LinearProgress
+  LinearProgress, CircularProgress
 } from '@material-ui/core';
 import {
   AddCircleOutlined as AddIcon,
@@ -48,6 +48,17 @@ const styles: any = (theme: Theme) => ({
   },
   paper: {
     boxShadow: 'none'
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative'
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   }
 });
 
@@ -388,6 +399,13 @@ class OrderRequest extends React.Component<any, any> {
               주문 입력
             </Typography>
 
+            <Typography align='center' className={classes.wrapper}>
+              <Button variant='outlined' disabled>
+                {!Boolean(this.state.is_loading) ? this.state.interval_sec : "Loading..."}
+                {Boolean(this.state.is_loading) && <CircularProgress size={24} color='inherit' className={classes.buttonProgress} />}
+              </Button>
+            </Typography>
+
             <List
               dense
               subheader={
@@ -396,6 +414,16 @@ class OrderRequest extends React.Component<any, any> {
                 </ListSubheader>
               }
             >
+              {this.state.menu_list.length === 0 &&
+              <ListItem className={classes.listItem} disabled>
+                <ListItemAvatar>
+                  <Avatar>
+                    X
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="메뉴가 없습니다." secondary="관리자 화면에서 메뉴를 추가해주세요." />
+              </ListItem>
+              }
               {menuItems}
             </List>
 

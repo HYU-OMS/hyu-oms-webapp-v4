@@ -9,7 +9,7 @@ import {
   Avatar,
   Button, ButtonGroup,
   Chip,
-  LinearProgress
+  LinearProgress, CircularProgress
 } from '@material-ui/core';
 import {
   Check as CheckIcon,
@@ -40,6 +40,17 @@ const styles: any = (theme: Theme) => ({
   },
   paper: {
     boxShadow: 'none'
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative'
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   }
 });
 
@@ -234,7 +245,30 @@ class OrderList extends React.Component<any, any> {
               전체 주문 내역
             </Typography>
 
+            <Typography align='center' className={classes.wrapper}>
+              <Button variant='outlined' disabled>
+                {!Boolean(this.state.is_loading) ? this.state.interval_sec : "Loading..."}
+                {Boolean(this.state.is_loading) && <CircularProgress size={24} color='inherit' className={classes.buttonProgress} />}
+              </Button>
+            </Typography>
+
             <List dense>
+              {(this.state.list).length === 0 && (this.state.pagination).length === 0 &&
+              <ListItem
+                button
+                className={classes.listItem}
+                disabled
+              >
+                <ListItemAvatar>
+                  <Avatar>-</Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={
+                  <React.Fragment>
+                    주문 내역이 없습니다.
+                  </React.Fragment>
+                } secondary="-" />
+              </ListItem>
+              }
               {order_list}
             </List>
 

@@ -9,7 +9,7 @@ import {
   Collapse,
   Avatar,
   IconButton,
-  LinearProgress
+  LinearProgress, Button, CircularProgress
 } from '@material-ui/core';
 import {
   RemoveCircleOutlined as RemoveIcon,
@@ -38,6 +38,17 @@ const styles: any = (theme: Theme) => ({
   },
   paper: {
     boxShadow: 'none'
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative'
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   }
 });
 
@@ -236,7 +247,24 @@ class Queue extends React.Component<any, any> {
               메뉴별 대기열
             </Typography>
 
+            <Typography align='center' className={classes.wrapper}>
+              <Button variant='outlined' disabled>
+                {!Boolean(this.state.is_loading) ? this.state.interval_sec : "Loading..."}
+                {Boolean(this.state.is_loading) && <CircularProgress size={24} color='inherit' className={classes.buttonProgress} />}
+              </Button>
+            </Typography>
+
             <List dense disablePadding>
+              {menus.length === 0 &&
+              <ListItem disabled className={classes.listItem}>
+                <ListItemAvatar>
+                  <Avatar>
+                    -
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="메뉴가 없습니다." secondary="관리자 화면에서 메뉴를 추가해주세요."/>
+              </ListItem>
+              }
               {menus}
             </List>
           </div>
