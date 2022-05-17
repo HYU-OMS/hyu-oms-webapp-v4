@@ -41,14 +41,14 @@ class Home extends React.Component<any, any> {
               <ListItemIcon>
                 <EmailIcon />
               </ListItemIcon>
-              <ListItemText primary="Contact Email" secondary="khhan1993@gmail.com" />
+              <ListItemText primary="Contact Email" secondary="me@hoony9x.dev" />
             </ListItem>
 
             <ListItem
               button
               onClick={() => {
                 alert("This system uses WebApp Version 4, API Version 3.");
-                document.location.href = 'https://github.com/HYU-OMS';
+                document.location.href = 'https://github.com/hyu-oms';
               }}
             >
               <ListItemIcon>

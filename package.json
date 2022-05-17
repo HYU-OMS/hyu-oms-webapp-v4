@@ -2,16 +2,16 @@
   "name": "hyu-oms-webapp-v4",
   "version": "4.0.0",
   "description": "HYU-OMS Version 4 (Web Application)",
-  "homepage": "https://hyu-oms.com",
+  "homepage": "https://app.hyu-oms.com",
   "private": true,
   "author": {
     "name": "Kihoon Han",
-    "email": "khhan1993@gmail.com",
-    "url": "https://github.com/khhan1993"
+    "email": "me@hoony9x.dev",
+    "url": "https://github.com/hoony9x"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/HYU-OMS/hyu-oms-webapp-v4.git"
+    "url": "https://github.com/hyu-oms/hyu-oms-webapp-v4.git"
   },
   "dependencies": {
     "@material-ui/core": "^4.1.3",

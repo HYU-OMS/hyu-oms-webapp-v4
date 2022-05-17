@@ -431,7 +431,7 @@ class App extends React.Component<any, any> {
         <div style={{padding: '6px'}} />
 
         <Typography variant='caption' style={{color: '#888888', textAlign: 'center'}}>
-          <strong>&copy; 2014 - 2019 한양대학교 한기훈</strong>
+          <strong>&copy; 2014 - 2019 한기훈</strong>
         </Typography>
 
         <div style={{padding: '12px'}} />

@@ -18,7 +18,7 @@ const initialState: ReduxAuthState = {
     }
     else {
       if(!Boolean(process.env.REACT_APP_API_URL)) {
-        return 'https://hyu-oms.com/api/v3';
+        return 'https://api.hyu-oms.com/api/v3';
       }
       else {
         return process.env.REACT_APP_API_URL as string;
